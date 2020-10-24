@@ -6,7 +6,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Hello World!</Text>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
     </View>
   );
 }
@@ -21,6 +21,6 @@ const styles = StyleSheet.create({
   title: {
     color: '#FFF',
     fontSize: 40,
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });

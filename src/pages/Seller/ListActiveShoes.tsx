@@ -23,10 +23,6 @@ export default function Shoes() {
         navigation.navigate('RegisterNewShoe');
     }
 
-    function navigateToDetails(id: string){
-        navigation.navigate('ProductDetails', { id });
-    }
-
     function sizeEdit(size_id: string) {
         navigation.navigate('UpdateQuantity', {id: size_id});
     }
@@ -48,8 +44,8 @@ export default function Shoes() {
                 {
                     shoes.map(shoe => {
                         return (
-                            <RectButton key={shoe.id} style={styles.cardHorizontallContent} onPress={ () => navigateToDetails(shoe.id) } >
-                                <View style={ styles.cardVerticalImage } >
+                            <View key={shoe.id} style={styles.cardHorizontallContent}>
+                                <View style={ styles.cardVerticalImage }>
                                      <MaterialCommunityIcons name="file-image" color="#4F4F4F" size={60}/>
                                 </View>
                                
@@ -63,7 +59,7 @@ export default function Shoes() {
                                         <MaterialCommunityIcons name="plus" color="#FFF" size={26}/>
                                     </RectButton>
                                 </View>
-                            </RectButton>
+                            </View>
                             
                         );
                     })

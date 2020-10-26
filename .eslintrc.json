@@ -36,7 +36,12 @@
       "no-use-before-define": "off",
       "prettier/prettier": "error",
       "react/style-prop-object": "off",
+      "react/prop-types": "off",
+      "react/jsx-props-no-spreading": "off",
       "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-empty-function": "off",
+      "no-unused-expressions": "warn",
+      "no-unused-vars": "warn",
       "import/extensions": [
         "error",
         "ignorePackages",

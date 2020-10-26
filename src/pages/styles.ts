@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     // VIEW PRINCIPAL
@@ -201,7 +201,115 @@ const styles = StyleSheet.create({
         color: '#EB5757',
         fontFamily: 'Quicksand_500Medium',
         fontSize: 12
-    }
+    },
+
+    // IMAGEM DO CALÇADO
+    imageContainer: {
+        height: 200,
+    },
+
+    image: {
+        width: Dimensions.get('window').width,
+        height: 200,
+        resizeMode: 'cover',
+      },
+
+    // DETALHES DO CALÇADO
+    shoeDetails: {
+        padding: 24
+    },
+
+    shoeDetailName: {
+        fontFamily: 'Quicksand_700Bold',
+        fontSize: 36,
+    },
+
+    shoeDetailDescription:{
+        fontFamily: 'Quicksand_700Bold',
+        fontSize: 18,
+    },
+
+    shoeDetailPrice: {
+        fontFamily: 'Quicksand_700Bold',
+        fontSize: 36,
+        color: '#9B51E0',
+    },
+
+    // BOTÃO ADICIONAR AO CARRINHO
+    cartButton: {
+        backgroundColor: '#eb5757',
+        borderRadius: 10,
+        height: 50,
+        width: '80%',
+        marginTop: 30,
+
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+
+    cartButtonText: {
+        color: '#f2f2f2',
+        fontFamily: 'Quicksand_700Bold',
+        fontSize: 18,
+    },
+
+    // INFORMAÇÕES COMPLEMENTARES
+    additionalInfo: {
+        width: '80%',
+        height: 186,
+        borderRadius: 10,
+        backgroundColor: '#F2F2F2',
+
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    horizontalInfo: {
+        flexDirection: 'row',
+    },
+
+    additionalInfoHeader: {
+        color: '#333333',
+        fontFamily: 'Quicksand_700Bold',
+        fontSize: 18,
+    },
+
+    additionalInfoTitle: {
+        color: '#4f4f4f',
+        fontFamily: 'Quicksand_700Bold',
+        fontSize: 18,
+    },
+
+    additionalInfoText: {
+        color: '#828282',
+        fontFamily: 'Quicksand_500Medium',
+        fontSize: 14,
+    },
+
+    // TAMANHOS DISPONÍVEIS
+    sizeContainer: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        backgroundColor: '#EB5757',
+
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    
+    sizeText: {
+        color: '#FFF',
+        fontFamily: 'Quicksand_700Bold',
+        fontSize: 24,
+    },
+
 });
 
 export default styles;

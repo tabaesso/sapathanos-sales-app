@@ -26,7 +26,7 @@ export default function Shoes() {
     return (
         <View style={ styles.main }>
             <Text style={styles.lenghtInfo}> Total de sapatos encontrados: { shoes.length } </Text>
-            
+
             <ScrollView>
                 <View style={ styles.cardVerticalContainer } >{
                     shoes.map(shoe => {
@@ -35,19 +35,21 @@ export default function Shoes() {
                                 <View style={ styles.cardVerticalImage }>
                                     <MaterialCommunityIcons name="file-image" color="#4F4F4F" size={60}/>
                                 </View>
-                            
 
                                 <View style={styles.cardVerticalInfo}>
-                                    <Text style={styles.shoeName}>{ shoe.name }</Text>
-                                    <Text style={styles.shoeDescription}>{ shoe.description }</Text>
-                                    <Text style={styles.shoePrice}>R$ { shoe.price }</Text>
+                                    <Text style={styles.shoeName}>{ shoe.name.substring(0, 12)}</Text>
+                                    <Text style={styles.shoeDescription}>{ shoe.description.substring(0, 14) + '...' }</Text>
+                                    <View style={styles.infoShoeContainer}>
+                                        <Text style={styles.infoShoeLeft}>R$ </Text>
+                                        <Text style={styles.infoShoeRight}>{ shoe.price }</Text>
+                                    </View>
                                 </View>
-                            </View>                            
+                            </View>
                         );
                     })
                 }
-                </View>                
+                </View>
             </ScrollView>
-        </View>        
+        </View>
     );
 }

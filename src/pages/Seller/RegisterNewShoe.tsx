@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, ScrollView, TextInput } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
@@ -17,23 +17,27 @@ export default function RegisterNewShoe() {
     const [color, setColor] = useState('');
     const [material, setMaterial] = useState('');
     const [price, setPrice] = useState('');
+    const [departmentError, setDepartmentError] = useState('');
     const [categoryError, setCategoryError] = useState('');
     const [nameError, setNameError] = useState('');
     const [descriptionError, setDescriptionError] = useState('');
     const [colorError, setColorError] = useState('');
     const [materialError, setMaterialError] = useState('');
     const [priceError, setPriceError] = useState('');
+    const [department_id, setDepartmentId] = useState('');
 
-    const [selectedDepartment, setSelectedDepartment] = useState<any>({
-        department: 'Selecione'
-    });
-    const [selectedCategoty, setSelectedCategoty] = useState<any>({
-        category: 'Selecione'
-    });
+    useEffect(() => {
+      if(category_id !== '') {
+        categoryValidator();
+      }
+
+      if(department_id !== '') {
+        departmentValidator();
+      }
+    }, [category_id, department_id]);
 
     async function navigateToUpdateSizes() {
-        setCategoryId(selectedCategoty.category);
-
+        departmentValidator();
         nameValidator();
         descriptionValidator();
         colorValidator();
@@ -41,18 +45,19 @@ export default function RegisterNewShoe() {
         priceValidator();
         categoryValidator();
 
-        if( 
+        if(
+            department_id === '' ||
             category_id === '' ||
             name === '' ||
-            description === '' || 
-            color === '' || 
+            description === '' ||
+            color === '' ||
             material === '' ||
             price === ''
          ){
             console.log({
                 message: 'Verifique os campos'
             });
-        } else { 
+        } else {
             const data = {
                     category_id,
                     name,
@@ -60,27 +65,36 @@ export default function RegisterNewShoe() {
                     color,
                     material,
                     price
-                }  
+                }
 
             const response = await api.post('products', data);
 
             await api.put(`products/${response.data.id}/status`);
-            
+
             navigation.navigate('UpdateQuantity', { id: response.data.size_id } );
 
             clear();
-        }  
+        }
     }
 
     function clear() {
-        setCategoryId('');
-        setName('')
-        setDescription('');
-        setMaterial('');
-        setColor('');
-        setPrice('');
+      setDepartmentId('');
+      setCategoryId('');
+      setName('')
+      setDescription('');
+      setMaterial('');
+      setColor('');
+      setPrice('');
     }
-    
+
+    function departmentValidator() {
+      if(department_id === '' || department_id === null) {
+        setDepartmentError('Não se esqueça do departamento');
+      } else {
+        setDepartmentError('');
+      }
+    }
+
     function categoryValidator() {
         if(category_id === '' || category_id === null) {
             setCategoryError('Não se esqueça da categoria');
@@ -130,70 +144,77 @@ export default function RegisterNewShoe() {
     }
 
     return (
-        <ScrollView style={{ 
-            flex: 1,
-            padding: 25
-        }}>
-            <View>
+        <ScrollView style={ styles.mainForScroll }>
+            <View style={ styles.selectInputContainer } >
                 <Text style={styles.titleInput}>
                     Selecione o departamento:
                 </Text>
                 <View style={styles.selectInput}>
                     <Picker
-                        selectedValue={selectedDepartment.department}
+                        selectedValue={department_id}
                         style={styles.pickerInput}
                         onValueChange={(itemValue, itemIndex) =>
-                            setSelectedDepartment({department: itemValue})
+                            setDepartmentId(String(itemValue))
                     }>
-                        <Picker.Item 
-                            label="Selecione" 
+                        <Picker.Item
+                            label="Clique para selecionar"
                             value=""
                         />
-                         <Picker.Item 
-                            label="Masculino" 
+                         <Picker.Item
+                            label="Masculino"
                             value="14902049-10d6-46ae-a4ef-e7eeccea01cb"
                         />
                         {/* {
                             products.map(product => {
                                 return (
-                                    <Picker.Item 
-                                        key={product.id} 
-                                        label={product.name} 
+                                    <Picker.Item
+                                        key={product.id}
+                                        label={product.name}
                                         value={product.id}
                                     />
                                 );
                             })
                         } */}
-                        
+
                     </Picker>
                 </View>
+                {
+                (departmentError !== '')
+                    ? <Text style={ styles.messageError }>{ descriptionError }</Text>
+                    : null
+                }
             </View>
 
-            <View>
+            <View style={ styles.selectInputContainer }>
                 <Text style={styles.titleInput}>
                     Selecione uma categoria:
                 </Text>
                 <View style={styles.selectInput}>
                     <Picker
-                        selectedValue={selectedCategoty.category}
+                        selectedValue={category_id}
                         style={styles.pickerInput}
+                        enabled={ department_id === '' ? false : true }
                         onValueChange={(itemValue, itemIndex) =>
-                            setSelectedCategoty({category: itemValue})
+                            setCategoryId(String(itemValue))
                     }>
-                        <Picker.Item 
-                            label="Selecione" 
+                        {/* <Picker.Item
+                            label="Selecione"
+                            value=""
+                        /> */}
+                        <Picker.Item
+                            label="Clique para selecionar"
                             value=""
                         />
-                        <Picker.Item 
-                            label="Sapatênis" 
+                        <Picker.Item
+                            label="Sapatênis"
                             value="41ef269a-4791-474a-9faf-2708daca7b3d"
                         />
                         {/* {
                             products.map(product => {
                                 return (
-                                    <Picker.Item 
-                                        key={product.id} 
-                                        label={product.name} 
+                                    <Picker.Item
+                                        key={product.id}
+                                        label={product.name}
                                         value={product.id}
                                     />
                                 );
@@ -202,98 +223,112 @@ export default function RegisterNewShoe() {
                     </Picker>
                 </View>
                 {
-                (categoryError !== '') 
+                (categoryError !== '')
                     ? <Text style={ styles.messageError }>{ categoryError }</Text>
+                    : null
+                }
+                {
+                (department_id === '' || department_id === null)
+                    ? <Text style={ styles.messageError }> Selecione um departamento </Text>
                     : null
                 }
             </View>
 
-            <Text style={styles.titleInput}>
+            <View style={ styles.inputContainer }>
+              <Text style={styles.titleInput}>
                 Nome
-            </Text>
-            <TextInput 
+              </Text>
+              <TextInput
                 style={styles.textInput}
                 value={name}
                 onBlur={nameValidator}
                 multiline
                 onChangeText={setName}
-            />
-            {
-                (nameError !== '') 
-                    ? <Text style={ styles.messageError }>{ nameError }</Text>
-                    : null
-            }
-            
+              />
+              {
+                (nameError !== '')
+                  ? <Text style={ styles.messageError }>{ nameError }</Text>
+                  : null
+              }
+            </View>
 
-            <Text style={styles.titleInput}>
-                Descrição
-            </Text>
-            <TextInput 
-                style={styles.textInput}
-                value={description}
-                onBlur={descriptionValidator}
-                multiline
-                onChangeText={setDescription}
-            />
+            <View style={ styles.inputContainer }>
+              <Text style={styles.titleInput}>
+                  Descrição
+              </Text>
+              <TextInput
+                  style={styles.textInput}
+                  value={description}
+                  onBlur={descriptionValidator}
+                  multiline
+                  onChangeText={setDescription}
+              />
 
-            {
-                (descriptionError !== '') 
-                    ? <Text style={ styles.messageError }>{ descriptionError }</Text>
-                    : null
-            }
+              {
+                  (descriptionError !== '')
+                      ? <Text style={ styles.messageError }>{ descriptionError }</Text>
+                      : null
+              }
+            </View>
 
-            <Text style={styles.titleInput}>
-                Cor
-            </Text>
-            <TextInput 
-                style={styles.textInput}
-                value={color}
-                onBlur={colorValidator}
-                multiline
-                onChangeText={setColor}
-            />
+            <View style={ styles.inputContainer }>
+              <Text style={styles.titleInput}>
+                  Cor
+              </Text>
+              <TextInput
+                  style={styles.textInput}
+                  value={color}
+                  onBlur={colorValidator}
+                  multiline
+                  onChangeText={setColor}
+              />
 
-            {
-                (colorError !== '') 
-                    ? <Text style={ styles.messageError }>{ colorError }</Text>
-                    : null
-            }
+              {
+                  (colorError !== '')
+                      ? <Text style={ styles.messageError }>{ colorError }</Text>
+                      : null
+              }
+            </View>
 
-            <Text style={styles.titleInput}>
-                Material
-            </Text>
-            <TextInput 
-                style={styles.textInput}
-                value={material}
-                onBlur={materialValidator}
-                multiline
-                onChangeText={setMaterial}
-            />
+            <View style={ styles.inputContainer }>
+              <Text style={styles.titleInput}>
+                  Material
+              </Text>
+              <TextInput
+                  style={styles.textInput}
+                  value={material}
+                  onBlur={materialValidator}
+                  multiline
+                  onChangeText={setMaterial}
+              />
 
-            {
-                (materialError !== '') 
-                    ? <Text style={ styles.messageError }>{ materialError }</Text>
-                    : null
-            }
+              {
+                  (materialError !== '')
+                      ? <Text style={ styles.messageError }>{ materialError }</Text>
+                      : null
+              }
+            </View>
 
-            <Text style={styles.titleInput}>
-                Preço
-            </Text>
-            <TextInput 
-                style={styles.textInput}
-                value={price}
-                onBlur={priceValidator}
-                keyboardType="number-pad"
-                maxLength={7}
-                onChangeText={setPrice}
-            />
+            <View style={ styles.inputContainer }>
+              <Text style={styles.titleInput}>
+                  Preço
+              </Text>
+              <TextInput
+                  style={styles.textInput}
+                  value={price}
+                  onBlur={priceValidator}
+                  keyboardType="number-pad"
+                  maxLength={7}
+                  onChangeText={setPrice}
+              />
 
-            {
-                (priceError !== '') 
-                    ? <Text style={ styles.messageError }>{ priceError }</Text>
-                    : null
-            }
-            
+              {
+                  (priceError !== '')
+                      ? <Text style={ styles.messageError }>{ priceError }</Text>
+                      : null
+              }
+            </View>
+
             <View style={{ marginBottom: 50 }}>
                 <RectButton style={styles.textIconButton} onPress={navigateToUpdateSizes}>
                     <MaterialCommunityIcons name="chevron-right" color="#FFF" size={26}/>
@@ -302,6 +337,6 @@ export default function RegisterNewShoe() {
                     </Text>
                 </RectButton>
             </View>
-        </ScrollView>        
+        </ScrollView>
     );
 }

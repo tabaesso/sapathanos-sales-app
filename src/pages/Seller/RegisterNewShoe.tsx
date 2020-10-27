@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { View, Text, ScrollView, TextInput } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -9,6 +9,16 @@ import api from '../../services/api';
 
 import styles from '../styles';
 
+interface Departments {
+  id: string;
+  name: string;
+}
+
+interface Categories {
+  id: string;
+  name: string;
+}
+
 export default function RegisterNewShoe() {
     const navigation = useNavigation();
     const [category_id, setCategoryId] = useState('');
@@ -17,7 +27,7 @@ export default function RegisterNewShoe() {
     const [color, setColor] = useState('');
     const [material, setMaterial] = useState('');
     const [price, setPrice] = useState('');
-    const [seller_id, setSellerId] = useState('721b4f08-a707-4588-9aa3-47f0bef919b6');
+    const [seller_id, setSellerId] = useState('1d0f15e6-eac4-4044-b5be-9346cd79a657');
     const [departmentError, setDepartmentError] = useState('');
     const [categoryError, setCategoryError] = useState('');
     const [nameError, setNameError] = useState('');
@@ -27,6 +37,8 @@ export default function RegisterNewShoe() {
     const [priceError, setPriceError] = useState('');
     const [department_id, setDepartmentId] = useState('');
     const [sellerError, setSellerError] = useState('');
+    const [departments, setDepartments] = useState<Departments[]>([]);
+    const [categories, setCategories] = useState<Categories[]>([]);
 
     useEffect(() => {
       if(category_id !== '') {
@@ -37,6 +49,26 @@ export default function RegisterNewShoe() {
         departmentValidator();
       }
     }, [category_id, department_id]);
+
+    useEffect(() => {
+      if(department_id !== '') {
+        api.get(`categories/${department_id}/departamento`).then((response => {
+          setCategories(response.data);
+        }));
+      }
+    }, [department_id]);
+
+    useEffect(() => {
+      api.get('departamentos').then((response => {
+        setDepartments(response.data);
+      }));
+    }, []);
+
+    // useFocusEffect(() => {
+    //   api.get('departamentos').then((response => {
+    //     setDepartments(response.data);
+    //   }));
+    // });
 
     async function navigateToUpdateSizes() {
         sellerValidator();
@@ -179,27 +211,27 @@ export default function RegisterNewShoe() {
                             label="Clique para selecionar"
                             value=""
                         />
-                         <Picker.Item
+                         {/* <Picker.Item
                             label="Masculino"
                             value="14902049-10d6-46ae-a4ef-e7eeccea01cb"
-                        />
-                        {/* {
-                            products.map(product => {
+                        /> */}
+                        {
+                            departments.map(department => {
                                 return (
                                     <Picker.Item
-                                        key={product.id}
-                                        label={product.name}
-                                        value={product.id}
+                                        key={department.id}
+                                        label={department.name}
+                                        value={department.id}
                                     />
                                 );
                             })
-                        } */}
+                        }
 
                     </Picker>
                 </View>
                 {
                 (departmentError !== '')
-                    ? <Text style={ styles.messageError }>{ descriptionError }</Text>
+                    ? <Text style={ styles.messageError }>{ departmentError }</Text>
                     : null
                 }
             </View>
@@ -224,21 +256,21 @@ export default function RegisterNewShoe() {
                             label="Clique para selecionar"
                             value=""
                         />
-                        <Picker.Item
+                        {/* <Picker.Item
                             label="Sapatênis"
                             value="41ef269a-4791-474a-9faf-2708daca7b3d"
-                        />
-                        {/* {
-                            products.map(product => {
+                        /> */}
+                        {
+                            categories.map(categorie => {
                                 return (
                                     <Picker.Item
-                                        key={product.id}
-                                        label={product.name}
-                                        value={product.id}
+                                        key={categorie.id}
+                                        label={categorie.name}
+                                        value={categorie.id}
                                     />
                                 );
                             })
-                        }                         */}
+                        }
                     </Picker>
                 </View>
                 {

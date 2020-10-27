@@ -2,9 +2,8 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Header from '../../components/Header';
-import ListCategoriesByDepartment from '../../pages/Category/ListCategoriesByDepartment';
-import ListiAllDepartment from '../../pages/Category/ListAllDepartments';
-import Shoe from '../../pages/Shoes';
+import ListCategoriesByDepartmentCustomer from '../../pages/CategoryCustomer/ListCategoriesByDepartmentCustomer';
+import ListiAllDepartmentCustomer from '../../pages/CategoryCustomer/ListAllDepartmentsCustomer';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -17,21 +16,13 @@ export default function CategoryRoutes() {
         cardStyle: { backgroundColor: '#f2f3f5' },
       }}
     >
-      <Screen name="ListiAllDepartment" component={ListiAllDepartment} />
+      <Screen name="ListiAllDepartmentCustomer" component={ListiAllDepartmentCustomer} />
       <Screen
-        name="ListCategoriesByDepartment"
-        component={ListCategoriesByDepartment}
+        name="ListCategoriesByDepartmentCustomer"
+        component={ListCategoriesByDepartmentCustomer}
         options={{
           headerShown: true,
           header: () => <Header title="Categorias" />,
-        }}
-      />
-      <Screen
-        name="Shoe"
-        component={Shoe}
-        options={{
-          headerShown: true,
-          header: () => <Header title="Sapatos" />,
         }}
       />
     </Navigator>

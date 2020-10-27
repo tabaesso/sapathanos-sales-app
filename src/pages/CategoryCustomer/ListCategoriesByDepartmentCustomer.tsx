@@ -1,0 +1,126 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import api from '../../services/api';
+
+import styles from '../styles';
+
+interface Categories {
+    id: string;
+    department_id: string;
+    name: string;
+}
+
+interface DepartmentRouteParams {
+  id: string;
+}
+
+export default function ListCategoriesByDepartmentCustomer() {
+    const navigation = useNavigation();
+    const route = useRoute();
+    const params = route.params as DepartmentRouteParams;
+
+    const [categories, setCategories] = useState<Categories[]>([]);
+    const [name, setName] = useState('');
+    const [nameError, setNameError] = useState('');
+
+    function loadCategories(id: string) {
+      const department_id = id;
+
+      api.get(`categories/${department_id}/departamento`).then((response => {
+        setCategories(response.data);
+      }));
+    }
+
+    useEffect(() => {
+      loadCategories(params.id);
+    }, [params]);
+
+    function goToShoes(id: string) {
+      navigation.navigate('Shoes', { id });
+
+  }
+
+    async function handleCreateCategory() {
+      const department_id = params.id;
+      nameValidator();
+
+      if(
+        name === '' ||
+        department_id === ''
+      ) {
+        console.log('Algum capos está vázio');
+      } else {
+        const data = {
+          name,
+          department_id
+        };
+
+        await api.post('categories', data);
+
+        loadCategories(params.id);
+        setName('');
+      }
+    }
+
+    function nameValidator() {
+      if(name === '' || name === null) {
+          setNameError('Não se esqueça do nome');
+      } else {
+          setNameError('');
+      }
+    }
+
+    return (
+        <View style={ styles.main }>
+            <ScrollView
+                style={ [customStyles.listContainer, { marginTop: -50}] }
+            >
+                {
+                categories.map(categoty => {
+                  return (
+                    <View key={categoty.id}>
+                      <View style={ customStyles.divisor }></View>
+
+                      <RectButton style={customStyles.listIitem} onPress={() => goToShoes(categoty.id)}>
+                        <Text style={ styles.titlePage }>{ categoty.name }</Text>
+                        <MaterialCommunityIcons name="chevron-right" color="#828282" size={26}/>
+                      </RectButton>
+
+                      <View style={ customStyles.divisor }></View>
+                    </View>
+
+                  );
+                })
+              }
+            </ScrollView>
+        </View>
+    );
+}
+
+const customStyles = StyleSheet.create({
+  divisor: {
+    width: '100%',
+    borderTopWidth: 1,
+    borderColor: '#CCC'
+  },
+
+  listContainer: {
+    width: '100%',
+    marginTop: 20
+  },
+
+  listIitem: {
+    paddingHorizontal: 10,
+    height: 64,
+    backgroundColor: 'transparent',
+
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    direction: 'inherit',
+    flexWrap: 'nowrap'
+  }
+});

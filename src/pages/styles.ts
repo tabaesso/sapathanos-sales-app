@@ -362,6 +362,7 @@ const styles = StyleSheet.create({
 
     horizontalInfo: {
         flexDirection: 'row',
+        marginTop: 20
     },
 
     additionalInfoHeader: {
@@ -374,6 +375,7 @@ const styles = StyleSheet.create({
         color: '#4f4f4f',
         fontFamily: 'Quicksand_700Bold',
         fontSize: 18,
+        
     },
 
     additionalInfoText: {

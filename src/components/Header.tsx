@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
 
-    title: { 
+    title: {
         color: '#9B51E0',
         fontSize: 16,
         fontFamily: 'Quicksand_600SemiBold'

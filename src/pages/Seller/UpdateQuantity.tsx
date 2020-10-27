@@ -34,11 +34,11 @@ interface Size {
 export default function UpdateQuantity() {
     const route = useRoute();
     const params = route.params as ShoeRouteParams;
-    
+
     const navigation = useNavigation();
 
     const [size, setSize] = useState<Size>();
-    
+
     const [size_33, setSize33] = useState('');
     const [size_34, setSize34] = useState('');
     const [size_35, setSize35] = useState('');
@@ -56,13 +56,13 @@ export default function UpdateQuantity() {
     const [size_47, setSize47] = useState('');
     const [size_48, setSize48] = useState('');
 
-    useEffect(() => {  
+    useEffect(() => {
         api.get(`sizes/${params.id}`).then((response => {
-            setSize(response.data);   
+            setSize(response.data);
         }));
     }, [params.id])
 
-    useEffect(() => { 
+    useEffect(() => {
         if(size) {
             setSize33(String(size.size_33));
             setSize34(String(size.size_34));
@@ -81,7 +81,7 @@ export default function UpdateQuantity() {
             setSize47(String(size.size_47));
             setSize48(String(size.size_48));
         }
-    }, [size])
+    }, [size]);
 
     if(!size) {
         return (
@@ -90,7 +90,7 @@ export default function UpdateQuantity() {
             </View>
         )
     }
-    
+
     async function handleSave() {
           const data = {
                 size_33,
@@ -117,10 +117,7 @@ export default function UpdateQuantity() {
     }
 
     return (
-        <ScrollView style={{ 
-            flex: 1,
-            padding: 25
-        }}>
+        <ScrollView style={ styles.mainForScroll }>
             <View style={customStyles.row}>
                 <Text style={customStyles.title}>
                     33
@@ -128,11 +125,11 @@ export default function UpdateQuantity() {
 
                 <View style={{marginTop: 10}}>
                     <MaterialCommunityIcons name="ray-start-arrow" color="#219653" size={26}/>
-                </View> 
+                </View>
 
                 {/* <Text> { size.size_33 } </Text> */}
 
-                <TextInput 
+                <TextInput
                     style={customStyles.input}
                     value={size_33}
                     maxLength={4}
@@ -148,9 +145,9 @@ export default function UpdateQuantity() {
 
                 <View style={{marginTop: 10}}>
                     <MaterialCommunityIcons name="ray-start-arrow" color="#219653" size={26}/>
-                </View> 
+                </View>
 
-                <TextInput 
+                <TextInput
                     style={customStyles.input}
                     value={size_34}
                     maxLength={4}
@@ -166,9 +163,9 @@ export default function UpdateQuantity() {
 
                 <View style={{marginTop: 10}}>
                     <MaterialCommunityIcons name="ray-start-arrow" color="#219653" size={26}/>
-                </View> 
+                </View>
 
-                <TextInput 
+                <TextInput
                     style={customStyles.input}
                     value={size_35}
                     maxLength={4}
@@ -184,9 +181,9 @@ export default function UpdateQuantity() {
 
                 <View style={{marginTop: 10}}>
                     <MaterialCommunityIcons name="ray-start-arrow" color="#219653" size={26}/>
-                </View> 
+                </View>
 
-                <TextInput 
+                <TextInput
                     style={customStyles.input}
                     value={size_36}
                     maxLength={4}
@@ -202,9 +199,9 @@ export default function UpdateQuantity() {
 
                 <View style={{marginTop: 10}}>
                     <MaterialCommunityIcons name="ray-start-arrow" color="#219653" size={26}/>
-                </View> 
+                </View>
 
-                <TextInput 
+                <TextInput
                     style={customStyles.input}
                     value={size_37}
                     maxLength={4}
@@ -220,9 +217,9 @@ export default function UpdateQuantity() {
 
                 <View style={{marginTop: 10}}>
                     <MaterialCommunityIcons name="ray-start-arrow" color="#219653" size={26}/>
-                </View> 
+                </View>
 
-                <TextInput 
+                <TextInput
                     style={customStyles.input}
                     value={size_38}
                     maxLength={4}
@@ -238,9 +235,9 @@ export default function UpdateQuantity() {
 
                 <View style={{marginTop: 10}}>
                     <MaterialCommunityIcons name="ray-start-arrow" color="#219653" size={26}/>
-                </View> 
+                </View>
 
-                <TextInput 
+                <TextInput
                     style={customStyles.input}
                     value={size_39}
                     maxLength={4}
@@ -256,9 +253,9 @@ export default function UpdateQuantity() {
 
                 <View style={{marginTop: 10}}>
                     <MaterialCommunityIcons name="ray-start-arrow" color="#219653" size={26}/>
-                </View> 
+                </View>
 
-                <TextInput 
+                <TextInput
                     style={customStyles.input}
                     value={size_40}
                     maxLength={4}
@@ -274,9 +271,9 @@ export default function UpdateQuantity() {
 
                 <View style={{marginTop: 10}}>
                     <MaterialCommunityIcons name="ray-start-arrow" color="#219653" size={26}/>
-                </View> 
+                </View>
 
-                <TextInput 
+                <TextInput
                     style={customStyles.input}
                     value={size_41}
                     maxLength={4}
@@ -292,9 +289,9 @@ export default function UpdateQuantity() {
 
                 <View style={{marginTop: 10}}>
                     <MaterialCommunityIcons name="ray-start-arrow" color="#219653" size={26}/>
-                </View> 
+                </View>
 
-                <TextInput 
+                <TextInput
                     style={customStyles.input}
                     value={size_42}
                     maxLength={4}
@@ -310,9 +307,9 @@ export default function UpdateQuantity() {
 
                 <View style={{marginTop: 10}}>
                     <MaterialCommunityIcons name="ray-start-arrow" color="#219653" size={26}/>
-                </View> 
+                </View>
 
-                <TextInput 
+                <TextInput
                     style={customStyles.input}
                     value={size_43}
                     maxLength={4}
@@ -328,9 +325,9 @@ export default function UpdateQuantity() {
 
                 <View style={{marginTop: 10}}>
                     <MaterialCommunityIcons name="ray-start-arrow" color="#219653" size={26}/>
-                </View> 
+                </View>
 
-                <TextInput 
+                <TextInput
                     style={customStyles.input}
                     value={size_44}
                     maxLength={4}
@@ -346,9 +343,9 @@ export default function UpdateQuantity() {
 
                 <View style={{marginTop: 10}}>
                     <MaterialCommunityIcons name="ray-start-arrow" color="#219653" size={26}/>
-                </View> 
+                </View>
 
-                <TextInput 
+                <TextInput
                     style={customStyles.input}
                     value={size_45}
                     maxLength={4}
@@ -364,9 +361,9 @@ export default function UpdateQuantity() {
 
                 <View style={{marginTop: 10}}>
                     <MaterialCommunityIcons name="ray-start-arrow" color="#219653" size={26}/>
-                </View> 
+                </View>
 
-                <TextInput 
+                <TextInput
                     style={customStyles.input}
                     value={size_46}
                     maxLength={4}
@@ -382,9 +379,9 @@ export default function UpdateQuantity() {
 
                 <View style={{marginTop: 10}}>
                     <MaterialCommunityIcons name="ray-start-arrow" color="#219653" size={26}/>
-                </View> 
+                </View>
 
-                <TextInput 
+                <TextInput
                     style={customStyles.input}
                     value={size_47}
                     maxLength={4}
@@ -400,9 +397,9 @@ export default function UpdateQuantity() {
 
                 <View style={{marginTop: 10}}>
                     <MaterialCommunityIcons name="ray-start-arrow" color="#219653" size={26}/>
-                </View> 
+                </View>
 
-                <TextInput 
+                <TextInput
                     style={customStyles.input}
                     value={size_48}
                     maxLength={4}
@@ -419,14 +416,14 @@ export default function UpdateQuantity() {
                     </Text>
                 </RectButton>
             </View>
-        </ScrollView>        
+        </ScrollView>
     );
 }
 
 const customStyles = StyleSheet.create({
     row: {
         flexDirection: 'row',
-        justifyContent: 'center', 
+        justifyContent: 'center',
         alignItems: 'center'
     },
 
@@ -436,15 +433,15 @@ const customStyles = StyleSheet.create({
         width: 110,
         backgroundColor: '#E0E0E0',
         borderRadius: 10,
-        paddingHorizontal: 10, 
+        paddingHorizontal: 10,
         fontFamily: 'Quicksand_700Bold',
         fontSize: 36,
         color: '#828282',
         marginLeft: 10
-        
+
     },
-    
-    title: { 
+
+    title: {
         marginTop: 5,
         backgroundColor: 'transparent',
         color: '#4F4F4F',

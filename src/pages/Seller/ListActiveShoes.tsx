@@ -53,8 +53,12 @@ export default function Shoes() {
                                 <View style={styles.cardVHorizontallInfo}>
                                     <Text style={styles.shoeName}>{ shoe.name }</Text>
                                     <Text style={styles.shoeDescription}>{ shoe.description }</Text>
-                                    <Text style={styles.shoePrice}>R$ { shoe.price }</Text>
-
+                                    
+                                    <View style={styles.infoShoeContainer}>
+                                        <Text style={styles.infoShoeLeft}>R$ </Text>
+                                        <Text style={styles.infoShoeRight}>{ shoe.price }</Text>
+                                    </View>
+                                    
                                     <RectButton style={styles.iconButton} onPress={() => sizeEdit(shoe.size_id)}>
                                         <MaterialCommunityIcons name="plus" color="#FFF" size={26}/>
                                     </RectButton>

@@ -34,7 +34,6 @@ export const signInSeller = async ({
   password,
 }: userDTO): Promise<sellerAuthenticated> => {
   const response = await api.post('login/vendedorLogin', { email, password });
-
   const { token, seller } = response.data;
 
   const sellerAuth = { tokenSeller: token, seller };

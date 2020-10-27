@@ -6,10 +6,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import api from '../../services/api';
 
 import styles from '../styles';
+import { render } from 'react-dom';
 
 interface ProductRouteParams {
-    id: number;
-};
+    id: string;
+}
 
 interface Product {
     id: number;
@@ -36,19 +37,19 @@ interface Product {
     size_46: number;
     size_47: number;
     size_48: number;
-};
+}
 
 export default function ProductDetail(){
     const route = useRoute();
-    const [product, setProduct] = useState<Product>();
-
     const params = route.params as ProductRouteParams;
 
-    useEffect( () => {
-        api.get(`products/${params.id}`).then( response => {
+    const [product, setProduct] = useState<Product>();
+
+    useFocusEffect( () => {
+        api.get(`products/${params.id}`).then(( response => {
             setProduct(response.data);
-        });
-    }, [params.id]);
+        }));
+    });
 
     if ( !product ){
         return (
@@ -59,7 +60,6 @@ export default function ProductDetail(){
             </View>
         );
     }
-    
     return(
         <View style={styles.main} >
             <View style={styles.imageContainer} >

@@ -5,6 +5,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import Account from './AccountRoutes/account.routes';
 import Cart from '../pages/Cart';
 import Categories from '../pages/Categories';
+import CategoryRoutes from './CustomerCategoryRoutes/category.routes';
 import ProductDetailRoutes from '../routes/ProductDetailRoutes/productdetail.routes'
 import Shoes from '../pages/Shoes';
 import CartRotues from './CartRoutes/cart.routes';
@@ -37,8 +38,8 @@ export default function CustomerRoutes() {
       />
 
       <Tab.Screen
-        name="Categories"
-        component={Categories}
+        name="CategoryRoutes"
+        component={CategoryRoutes}
         options={{
           tabBarLabel: 'Categorias',
           tabBarIcon: ({ color }) => (

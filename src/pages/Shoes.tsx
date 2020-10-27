@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { View, Text, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import api from '../services/api';
@@ -15,15 +15,42 @@ interface Shoes {
     size_id: string;
 }
 
+interface CategotyRouteParams {
+  id: string;
+}
+
 export default function Shoes() {
     const navigation = useNavigation();
+
+    const route = useRoute();
+    const params = route.params as CategotyRouteParams;
+    const [isFilter, setIsFilter] = useState(false);
+
     const [shoes, setShoes] = useState<Shoes[]>([]);
 
-    useFocusEffect(() => {
-        api.get('products/active').then((response => {
+    async function loadProducts() {
+      await api.get('products/active').then((response => {
+        setShoes(response.data);
+      }));
+      setIsFilter(false);
+    }
+
+    useEffect(() => {
+        if(params) {
+          const category_id = params.id;
+          api.get(`products/${category_id}/category`).then((response => {
             setShoes(response.data);
-        }))
-    })
+          }))
+          setIsFilter(true);
+        } else {
+          loadProducts();
+        }
+    }, [params]);
+
+    function clearCategory() {
+      loadProducts();
+      navigation.navigate('Shoes')
+    }
 
     function goToProductDetails( id: string ){
         navigation.navigate('ProductDetails', { id });
@@ -32,6 +59,18 @@ export default function Shoes() {
     return (
         <View style={ styles.main }>
             <Text style={styles.lenghtInfo}> Total de sapatos encontrados: { shoes.length } </Text>
+
+            { isFilter ?
+              <View style={ [styles.textIconButtonContainer, { marginTop: -10, marginBottom: 10 }]}>
+                <RectButton style={styles.textIconButton} onPress={clearCategory}>
+                    <MaterialCommunityIcons name="autorenew" color="#FFF" size={26}/>
+                    <Text style={styles.titleTextIconButton}>
+                        Limpar categoria
+                    </Text>
+                </RectButton>
+              </View>
+              : null
+            }
 
             <ScrollView>
                 <View style={ styles.cardVerticalContainer } >{

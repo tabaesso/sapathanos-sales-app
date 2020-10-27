@@ -6,6 +6,7 @@ import Account from './AccountRoutes/account.routes';
 import Cart from '../pages/Cart';
 import Categories from '../pages/Categories';
 import Shoes from '../pages/Shoes';
+import CartRotues from './CartRoutes/cart.routes';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -50,8 +51,8 @@ export default function CustomerRoutes() {
       />
 
       <Tab.Screen
-        name="Cart"
-        component={Cart}
+        name="CartRotues"
+        component={CartRotues}
         options={{
           tabBarLabel: 'Carrinho',
           tabBarIcon: ({ color }) => (

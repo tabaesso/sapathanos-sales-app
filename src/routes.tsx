@@ -24,11 +24,11 @@ export default function Routes() {
   return (
     <Navigator>
       {customer && Object.keys(customer).length !== 0 ? (
-        <Screen name="CustomerRoutes" component={CustomerRoutes} />
+        <Screen name="CustomerRoutes" component={CustomerRoutes} options={{ headerShown: false }}/>
       ) : seller && Object.keys(seller).length !== 0 ? (
-        <Screen name="SellerRoutes" component={SellerRoutes} />
+        <Screen name="SellerRoutes" component={SellerRoutes} options={{ headerShown: false }}/>
       ) : (
-        <Screen name="CustomerRoutes" component={CustomerRoutes} />
+        <Screen name="CustomerRoutes" component={CustomerRoutes} options={{ headerShown: false }}/>
       )}
     </Navigator>
   );

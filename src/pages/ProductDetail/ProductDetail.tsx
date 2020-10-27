@@ -54,7 +54,7 @@ export default function ProductDetail(){
             setProduct(response.data);
         }));
     }
-
+ 
     useEffect( () => {
         loadShoe(params.id);
     }, [params]);

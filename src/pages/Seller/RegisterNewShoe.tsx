@@ -17,6 +17,7 @@ export default function RegisterNewShoe() {
     const [color, setColor] = useState('');
     const [material, setMaterial] = useState('');
     const [price, setPrice] = useState('');
+    const [seller_id, setSellerId] = useState('721b4f08-a707-4588-9aa3-47f0bef919b6');
     const [departmentError, setDepartmentError] = useState('');
     const [categoryError, setCategoryError] = useState('');
     const [nameError, setNameError] = useState('');
@@ -25,6 +26,7 @@ export default function RegisterNewShoe() {
     const [materialError, setMaterialError] = useState('');
     const [priceError, setPriceError] = useState('');
     const [department_id, setDepartmentId] = useState('');
+    const [sellerError, setSellerError] = useState('');
 
     useEffect(() => {
       if(category_id !== '') {
@@ -37,6 +39,7 @@ export default function RegisterNewShoe() {
     }, [category_id, department_id]);
 
     async function navigateToUpdateSizes() {
+        sellerValidator();
         departmentValidator();
         nameValidator();
         descriptionValidator();
@@ -46,6 +49,7 @@ export default function RegisterNewShoe() {
         categoryValidator();
 
         if(
+            seller_id === '' ||
             department_id === '' ||
             category_id === '' ||
             name === '' ||
@@ -59,6 +63,7 @@ export default function RegisterNewShoe() {
             });
         } else {
             const data = {
+                    seller_id,
                     category_id,
                     name,
                     description,
@@ -78,6 +83,7 @@ export default function RegisterNewShoe() {
     }
 
     function clear() {
+      setSellerId('');
       setDepartmentId('');
       setCategoryId('');
       setName('')
@@ -85,6 +91,14 @@ export default function RegisterNewShoe() {
       setMaterial('');
       setColor('');
       setPrice('');
+    }
+
+    function sellerValidator() {
+      if(seller_id === '' || seller_id === null) {
+          setSellerError('Aparentemente você não está logado');
+      } else {
+          setSellerError('');
+      }
     }
 
     function departmentValidator() {
@@ -146,6 +160,11 @@ export default function RegisterNewShoe() {
     return (
         <ScrollView style={ styles.mainForScroll }>
             <View style={ styles.selectInputContainer } >
+              {
+              (sellerError !== '')
+                ? <Text style={ styles.messageError }>{ sellerError }</Text>
+                : null
+              }
                 <Text style={styles.titleInput}>
                     Selecione o departamento:
                 </Text>

@@ -9,7 +9,7 @@ const { Navigator, Screen } = createStackNavigator();
 export default function Routes() {
     return (
         <Navigator
-            initialRouteName="SellerRoutes"
+            initialRouteName="CustomerRoutes"
             screenOptions={{
                 headerShown: false,
                 cardStyle: { backgroundColor: '#f2f3f5' }

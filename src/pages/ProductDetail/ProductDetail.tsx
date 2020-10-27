@@ -106,7 +106,11 @@ export default function ProductDetail(){
                     <Text>
                         Tamanhos disponíveis:
                     </Text>
-                    <View style={styles.horizontalInfo} >
+                    <ScrollView 
+                        style={styles.horizontalInfo} 
+                        horizontal 
+                        showsHorizontalScrollIndicator={false}
+                    >
                         { size.size_33 > 0 ? (
                             <View style={styles.sizeContainer} >
                                 <Text style={styles.sizeText} >
@@ -251,7 +255,7 @@ export default function ProductDetail(){
                         ): (
                             null
                         ) }
-                    </View>
+                    </ScrollView>
                 </View>
 
                 <RectButton style={styles.cartButton} >

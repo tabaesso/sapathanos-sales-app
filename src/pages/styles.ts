@@ -268,9 +268,9 @@ const styles = StyleSheet.create({
       fontSize: 12
   },
 
-  
+
     // IMAGEM DO CALÇADO
-    imageContainer: {        
+    imageContainer: {
         width: '100%',
         height: 200,
 
@@ -387,12 +387,13 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         borderRadius: 25,
+        marginRight: 4,
         backgroundColor: '#EB5757',
 
         justifyContent: 'center',
         alignItems: 'center',
     },
-    
+
     sizeText: {
         color: '#FFF',
         fontFamily: 'Quicksand_700Bold',

@@ -50,7 +50,7 @@ export default function Shoes() {
                                         <Text style={styles.infoShoeRight}>{ shoe.price }</Text>
                                     </View>
                                 </View>
-                            </RectButton>                            
+                            </RectButton>
                         );
                     })
                 }

@@ -21,22 +21,25 @@ interface Product {
     color: string;
     material: string;
     price: number;
-    size_33: number;
-    size_34: number;
-    size_35: number;
-    size_36: number;
-    size_37: number;
-    size_38: number;
-    size_39: number;
-    size_40: number;
-    size_41: number;
-    size_42: number;
-    size_43: number;
-    size_44: number;
-    size_45: number;
-    size_46: number;
-    size_47: number;
-    size_48: number;
+}
+
+interface Size {
+  size_33: number;
+  size_34: number;
+  size_35: number;
+  size_36: number;
+  size_37: number;
+  size_38: number;
+  size_39: number;
+  size_40: number;
+  size_41: number;
+  size_42: number;
+  size_43: number;
+  size_44: number;
+  size_45: number;
+  size_46: number;
+  size_47: number;
+  size_48: number;
 }
 
 export default function ProductDetail(){
@@ -44,24 +47,30 @@ export default function ProductDetail(){
     const params = route.params as ProductRouteParams;
 
     const [product, setProduct] = useState<Product>();
+    const [size, setSize] = useState<Size>();
 
     async function loadShoe( id: string ) {
-        const shoe_id = id;
-        
-        await api.get(`products/${shoe_id}`).then(( response => {
+        await api.get(`products/${id}/only`).then(( response => {
             setProduct(response.data);
-
-            
         }));
     }
 
     useEffect( () => {
         loadShoe(params.id);
-        console.log(product);
     }, [params]);
 
-   
-    if ( !product ){
+    useEffect(() => {
+      if(product) {
+        const id = product.size_id;
+
+        api.get(`sizes/${id}`).then(( response => {
+          setSize(response.data);
+        }));
+      }
+    }, [product]);
+
+
+    if ( !product || !size ){
         return (
             <View style={styles.main} >
                 <Text style={styles.shoeDescription} >
@@ -74,7 +83,7 @@ export default function ProductDetail(){
     return(
         <ScrollView style={styles.mainForScroll} >
             <View style={styles.imageContainer} >
-                {/*<Image 
+                {/*<Image
                     style={styles.image}
                     source={{ uri: product.image.url }}
                 />*/}
@@ -91,14 +100,14 @@ export default function ProductDetail(){
                 <Text style={styles.shoeDetailPrice} >
                     R$ {product.price}
                 </Text>
-                
+
                 { /* view dos tamanhos */ }
                 <View style={styles.sizesView} >
                     <Text>
                         Tamanhos disponíveis:
                     </Text>
                     <View style={styles.horizontalInfo} >
-                        { product.size_33 > 0 ? (
+                        { size.size_33 > 0 ? (
                             <View style={styles.sizeContainer} >
                                 <Text style={styles.sizeText} >
                                     33
@@ -107,7 +116,7 @@ export default function ProductDetail(){
                         ): (
                             null
                         ) }
-                        { product.size_34 > 0 ? (
+                        { size.size_34 > 0 ? (
                             <View style={styles.sizeContainer} >
                                 <Text style={styles.sizeText} >
                                     34
@@ -116,7 +125,7 @@ export default function ProductDetail(){
                         ): (
                             null
                         ) }
-                        { product.size_35 > 0 ? (
+                        { size.size_35 > 0 ? (
                             <View style={styles.sizeContainer} >
                                 <Text style={styles.sizeText} >
                                     35
@@ -125,7 +134,7 @@ export default function ProductDetail(){
                         ): (
                             null
                         ) }
-                        { product.size_36 > 0 ? (
+                        { size.size_36 > 0 ? (
                             <View style={styles.sizeContainer} >
                                 <Text style={styles.sizeText} >
                                     36
@@ -134,7 +143,7 @@ export default function ProductDetail(){
                         ): (
                             null
                         ) }
-                        { product.size_37 > 0 ? (
+                        { size.size_37 > 0 ? (
                             <View style={styles.sizeContainer} >
                                 <Text style={styles.sizeText} >
                                     37
@@ -143,7 +152,7 @@ export default function ProductDetail(){
                         ): (
                             null
                         ) }
-                        { product.size_38 > 0 ? (
+                        { size.size_38 > 0 ? (
                             <View style={styles.sizeContainer} >
                                 <Text style={styles.sizeText} >
                                     38
@@ -152,7 +161,7 @@ export default function ProductDetail(){
                         ): (
                             null
                         ) }
-                        { product.size_39 > 0 ? (
+                        { size.size_39 > 0 ? (
                             <View style={styles.sizeContainer} >
                                 <Text style={styles.sizeText} >
                                     39
@@ -161,7 +170,7 @@ export default function ProductDetail(){
                         ): (
                             null
                         ) }
-                        { product.size_40 > 0 ? (
+                        { size.size_40 > 0 ? (
                             <View style={styles.sizeContainer} >
                                 <Text style={styles.sizeText} >
                                     40
@@ -170,7 +179,7 @@ export default function ProductDetail(){
                         ): (
                             null
                         ) }
-                        { product.size_41 > 0 ? (
+                        { size.size_41 > 0 ? (
                             <View style={styles.sizeContainer} >
                                 <Text style={styles.sizeText} >
                                     41
@@ -179,7 +188,7 @@ export default function ProductDetail(){
                         ): (
                             null
                         ) }
-                        { product.size_42 > 0 ? (
+                        { size.size_42 > 0 ? (
                             <View style={styles.sizeContainer} >
                                 <Text style={styles.sizeText} >
                                     42
@@ -188,7 +197,7 @@ export default function ProductDetail(){
                         ): (
                             null
                         ) }
-                        { product.size_43 > 0 ? (
+                        { size.size_43 > 0 ? (
                             <View style={styles.sizeContainer} >
                                 <Text style={styles.sizeText} >
                                     43
@@ -197,7 +206,7 @@ export default function ProductDetail(){
                         ): (
                             null
                         ) }
-                        { product.size_44 > 0 ? (
+                        { size.size_44 > 0 ? (
                             <View style={styles.sizeContainer} >
                                 <Text style={styles.sizeText} >
                                     44
@@ -206,7 +215,7 @@ export default function ProductDetail(){
                         ): (
                             null
                         ) }
-                        { product.size_45 > 0 ? (
+                        { size.size_45 > 0 ? (
                             <View style={styles.sizeContainer} >
                                 <Text style={styles.sizeText} >
                                     45
@@ -215,7 +224,7 @@ export default function ProductDetail(){
                         ): (
                             null
                         ) }
-                        { product.size_46 > 0 ? (
+                        { size.size_46 > 0 ? (
                             <View style={styles.sizeContainer} >
                                 <Text style={styles.sizeText} >
                                     46
@@ -224,7 +233,7 @@ export default function ProductDetail(){
                         ): (
                             null
                         ) }
-                        { product.size_47 > 0 ? (
+                        { size.size_47 > 0 ? (
                             <View style={styles.sizeContainer} >
                                 <Text style={styles.sizeText} >
                                     47
@@ -233,7 +242,7 @@ export default function ProductDetail(){
                         ): (
                             null
                         ) }
-                        { product.size_48 > 0 ? (
+                        { size.size_48 > 0 ? (
                             <View style={styles.sizeContainer} >
                                 <Text style={styles.sizeText} >
                                     48
@@ -249,12 +258,12 @@ export default function ProductDetail(){
                     <MaterialCommunityIcons name="cart-plus" size={24} color="#f2f2f2" />
                     <Text style={styles.cartButtonText} >
                         Adicionar ao carrinho
-                    </Text>  
+                    </Text>
                 </RectButton>
 
                 <View style={styles.additionalInfo} >
-                    <Text style={styles.additionalInfoHeader} > 
-                        Informações adicionais: 
+                    <Text style={styles.additionalInfoHeader} >
+                        Informações adicionais:
                     </Text>
                     <View style={styles.horizontalInfo} >
                         <MaterialCommunityIcons name="palette-swatch" size={24} color="#2F80ED" />
@@ -268,7 +277,7 @@ export default function ProductDetail(){
                     <View style={styles.horizontalInfo} >
                         <MaterialCommunityIcons name="palette" size={24} color="#2F80ED" />
                         <Text style={styles.additionalInfoTitle} >
-                            Cor: 
+                            Cor:
                         </Text>
                     </View>
                     <Text style={styles.additionalInfoText} >

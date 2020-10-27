@@ -2,27 +2,27 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Header from '../../components/Header';
-import ListAllCategories from '../../pages/Category/ListAllCategories';
-import RegisterNewCategory from '../../pages/Category/RegisterNewCategory';
+import ListCategoriesByDepartment from '../../pages/Category/ListCategoriesByDepartment';
+import ListiAllDepartment from '../../pages/Category/ListAllDepartments';
 
 const { Navigator, Screen } = createStackNavigator();
 
 export default function CategoryRoutes() {
   return (
     <Navigator
-      initialRouteName="ListAllCategories"
+      initialRouteName="ListiAllDepartment"
       screenOptions={{
         headerShown: false,
         cardStyle: { backgroundColor: '#f2f3f5' },
       }}
     >
-      <Screen name="ListAllCategories" component={ListAllCategories} />
+      <Screen name="ListiAllDepartment" component={ListiAllDepartment} />
       <Screen
-        name="RegisterNewCategory"
-        component={RegisterNewCategory}
+        name="ListCategoriesByDepartment"
+        component={ListCategoriesByDepartment}
         options={{
           headerShown: true,
-          header: () => <Header title="Adicionar nova categoria" />,
+          header: () => <Header title="Categorias" />,
         }}
       />
     </Navigator>

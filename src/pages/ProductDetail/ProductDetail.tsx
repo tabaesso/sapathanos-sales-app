@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
@@ -44,11 +44,11 @@ export default function ProductDetail(){
 
     const params = route.params as ProductRouteParams;
 
-    useFocusEffect( () => {
+    useEffect( () => {
         api.get(`products/${params.id}`).then( response => {
             setProduct(response.data);
         });
-    });
+    }, [params.id]);
 
     if ( !product ){
         return (

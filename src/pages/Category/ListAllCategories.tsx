@@ -32,7 +32,7 @@ export default function ListAllCategories() {
 
             <Text style={styles.titlePage}> Listando todas as categorias </Text>
 
-            <ScrollView
+            {/* <ScrollView
                 style={ styles.cardHorizontalContainer }
             >
                 {
@@ -49,7 +49,7 @@ export default function ListAllCategories() {
                         );
                     })
                 }
-            </ScrollView>
+            </ScrollView> */}
         </View>
     );
 }

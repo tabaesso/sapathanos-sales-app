@@ -6,6 +6,7 @@ import CreateShoeRoutes from './CreateShoeRoutes/createshoe.routes';
 import ListActiveShoes from '../pages/Seller/ListActiveShoes';
 import Categories from '../pages/Categories';
 import Account from './AccountRoutes/account.routes';
+import CategoryRoutes from './SellerCategoryRoutes/category.routes';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -35,8 +36,8 @@ export default function SellerRoutes() {
       />
 
       <Tab.Screen
-        name="Categories"
-        component={Categories}
+        name="CategoryRoutes"
+        component={CategoryRoutes}
         options={{
           tabBarLabel: 'Categorias',
           tabBarIcon: ({ color }) => (

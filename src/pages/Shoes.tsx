@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { View, Text, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import api from '../services/api';
 
 import styles from './styles'
+import { RectButton } from 'react-native-gesture-handler';
 
 interface Shoes {
     id: string;
@@ -15,6 +16,7 @@ interface Shoes {
 }
 
 export default function Shoes() {
+    const navigation = useNavigation();
     const [shoes, setShoes] = useState<Shoes[]>([]);
 
     useFocusEffect(() => {
@@ -22,6 +24,10 @@ export default function Shoes() {
             setShoes(response.data);
         }))
     })
+
+    function goToProductDetails( id: string ){
+        navigation.navigate('ProductDetails', { id });
+    }
 
     return (
         <View style={ styles.main }>
@@ -31,7 +37,7 @@ export default function Shoes() {
                 <View style={ styles.cardVerticalContainer } >{
                     shoes.map(shoe => {
                         return (
-                            <View key={shoe.id} style={styles.cardVerticalContent}>
+                            <RectButton key={shoe.id} style={styles.cardVerticalContent} onPress={ () => goToProductDetails(shoe.id) } >
                                 <View style={ styles.cardVerticalImage }>
                                     <MaterialCommunityIcons name="file-image" color="#4F4F4F" size={60}/>
                                 </View>
@@ -44,7 +50,7 @@ export default function Shoes() {
                                         <Text style={styles.infoShoeRight}>{ shoe.price }</Text>
                                     </View>
                                 </View>
-                            </View>
+                            </RectButton>
                         );
                     })
                 }

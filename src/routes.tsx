@@ -7,7 +7,6 @@ import { useAuth } from './hooks/auth';
 
 import CustomerRoutes from './routes/customer.routes';
 import SellerRoutes from './routes/seller.routes';
-
 const { Navigator, Screen } = createStackNavigator();
 
 export default function Routes() {

@@ -27,7 +27,7 @@ export default function RegisterNewShoe() {
     const [color, setColor] = useState('');
     const [material, setMaterial] = useState('');
     const [price, setPrice] = useState('');
-    const [seller_id, setSellerId] = useState('1d0f15e6-eac4-4044-b5be-9346cd79a657');
+    const [seller_id, setSellerId] = useState('37b913f8-f83f-4690-8388-32d6499be131');
     const [departmentError, setDepartmentError] = useState('');
     const [categoryError, setCategoryError] = useState('');
     const [nameError, setNameError] = useState('');

@@ -67,8 +67,6 @@ export default function UpdateQuantity() {
             setSize33(String(size.size_33));
             setSize34(String(size.size_34));
             setSize35(String(size.size_35));
-            setSize35(String(size.size_35));
-            setSize35(String(size.size_35));
             setSize36(String(size.size_36));
             setSize37(String(size.size_37));
             setSize38(String(size.size_38));
@@ -76,7 +74,6 @@ export default function UpdateQuantity() {
             setSize40(String(size.size_40));
             setSize41(String(size.size_41));
             setSize42(String(size.size_42));
-            setSize43(String(size.size_43));
             setSize43(String(size.size_43));
             setSize44(String(size.size_44));
             setSize45(String(size.size_45));

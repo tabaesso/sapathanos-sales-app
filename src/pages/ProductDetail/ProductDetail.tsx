@@ -13,9 +13,9 @@ interface ProductRouteParams {
 }
 
 interface Product {
-    id: number;
-    category_id: number;
-    size_id: number;
+    id: string;
+    category_id: string;
+    size_id: string;
     name: string;
     description: string;
     color: string;
@@ -45,12 +45,22 @@ export default function ProductDetail(){
 
     const [product, setProduct] = useState<Product>();
 
-    useFocusEffect( () => {
-        api.get(`products/${params.id}`).then(( response => {
+    async function loadShoe( id: string ) {
+        const shoe_id = id;
+        
+        await api.get(`products/${shoe_id}`).then(( response => {
             setProduct(response.data);
-        }));
-    });
 
+            
+        }));
+    }
+
+    useEffect( () => {
+        loadShoe(params.id);
+        console.log(product);
+    }, [params]);
+
+   
     if ( !product ){
         return (
             <View style={styles.main} >
@@ -60,8 +70,9 @@ export default function ProductDetail(){
             </View>
         );
     }
+
     return(
-        <View style={styles.main} >
+        <ScrollView style={styles.mainForScroll} >
             <View style={styles.imageContainer} >
                 {/*<Image 
                     style={styles.image}
@@ -82,7 +93,7 @@ export default function ProductDetail(){
                 </Text>
                 
                 { /* view dos tamanhos */ }
-                <View>
+                <View style={styles.sizesView} >
                     <Text>
                         Tamanhos disponíveis:
                     </Text>
@@ -243,7 +254,7 @@ export default function ProductDetail(){
 
                 <View style={styles.additionalInfo} >
                     <Text style={styles.additionalInfoHeader} > 
-                        Informações complementares: 
+                        Informações adicionais: 
                     </Text>
                     <View style={styles.horizontalInfo} >
                         <MaterialCommunityIcons name="palette-swatch" size={24} color="#2F80ED" />
@@ -266,6 +277,6 @@ export default function ProductDetail(){
                 </View>
 
             </View>
-        </View>
+        </ScrollView>
     );
 }

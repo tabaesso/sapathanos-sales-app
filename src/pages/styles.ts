@@ -270,8 +270,14 @@ const styles = StyleSheet.create({
 
   
     // IMAGEM DO CALÇADO
-    imageContainer: {
+    imageContainer: {        
+        width: '100%',
         height: 200,
+
+        paddingHorizontal: 10,
+
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 
     image: {
@@ -282,7 +288,9 @@ const styles = StyleSheet.create({
 
     // DETALHES DO CALÇADO
     shoeDetails: {
-        padding: 24
+        padding: 24,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 
     shoeDetailName: {
@@ -301,13 +309,25 @@ const styles = StyleSheet.create({
         color: '#9B51E0',
     },
 
+    sizesView: {
+      width: '100%',
+
+      marginTop: 30,
+      paddingHorizontal: 10,
+
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+
     // BOTÃO ADICIONAR AO CARRINHO
     cartButton: {
         backgroundColor: '#eb5757',
         borderRadius: 10,
         height: 50,
-        width: '80%',
+        width: '90%',
         marginTop: 30,
+
+        paddingHorizontal: 10,
 
         flexDirection: 'row',
         justifyContent: 'center',
@@ -328,10 +348,13 @@ const styles = StyleSheet.create({
 
     // INFORMAÇÕES COMPLEMENTARES
     additionalInfo: {
-        width: '80%',
-        height: 186,
+        width: '90%',
+        height: 200,
         borderRadius: 10,
         backgroundColor: '#F2F2F2',
+
+        marginTop: 30,
+        paddingHorizontal: 10,
 
         justifyContent: 'center',
         alignItems: 'center',

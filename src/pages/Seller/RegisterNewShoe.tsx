@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { View, Text, ScrollView, TextInput } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -8,6 +8,7 @@ import {Picker} from '@react-native-community/picker';
 import api from '../../services/api';
 
 import styles from '../styles';
+import AsyncStorage from '@react-native-community/async-storage';
 
 interface Departments {
   id: string;
@@ -27,7 +28,7 @@ export default function RegisterNewShoe() {
     const [color, setColor] = useState('');
     const [material, setMaterial] = useState('');
     const [price, setPrice] = useState('');
-    const [seller_id, setSellerId] = useState('37b913f8-f83f-4690-8388-32d6499be131');
+    const [seller_id, setSellerId] = useState('');
     const [departmentError, setDepartmentError] = useState('');
     const [categoryError, setCategoryError] = useState('');
     const [nameError, setNameError] = useState('');
@@ -39,6 +40,15 @@ export default function RegisterNewShoe() {
     const [sellerError, setSellerError] = useState('');
     const [departments, setDepartments] = useState<Departments[]>([]);
     const [categories, setCategories] = useState<Categories[]>([]);
+
+    function loadSeller() {
+      AsyncStorage.getItem('@Sapathanos:seller').then(response => {
+        if(response) {
+          const res = JSON.parse(response);
+          setSellerId(res.id);
+        }
+      });
+    }
 
     useEffect(() => {
       if(category_id !== '') {
@@ -62,13 +72,9 @@ export default function RegisterNewShoe() {
       api.get('departamentos').then((response => {
         setDepartments(response.data);
       }));
-    }, []);
 
-    // useFocusEffect(() => {
-    //   api.get('departamentos').then((response => {
-    //     setDepartments(response.data);
-    //   }));
-    // });
+      loadSeller();
+    }, []);
 
     async function navigateToUpdateSizes() {
         sellerValidator();
@@ -115,7 +121,6 @@ export default function RegisterNewShoe() {
     }
 
     function clear() {
-      setSellerId('');
       setDepartmentId('');
       setCategoryId('');
       setName('')
@@ -127,9 +132,9 @@ export default function RegisterNewShoe() {
 
     function sellerValidator() {
       if(seller_id === '' || seller_id === null) {
-          setSellerError('Aparentemente você não está logado');
+        setSellerError('Aparentemente você não está logado');
       } else {
-          setSellerError('');
+        setSellerError('');
       }
     }
 
@@ -142,43 +147,43 @@ export default function RegisterNewShoe() {
     }
 
     function categoryValidator() {
-        if(category_id === '' || category_id === null) {
-            setCategoryError('Não se esqueça da categoria');
-        } else {
-            setCategoryError('');
-        }
+      if(category_id === '' || category_id === null) {
+        setCategoryError('Não se esqueça da categoria');
+      } else {
+        setCategoryError('');
+      }
     }
 
     function nameValidator() {
-        if(name === '' || name === null) {
-            setNameError('Não se esqueça do nome');
-        } else {
-            setNameError('');
-        }
+      if(name === '' || name === null) {
+        setNameError('Não se esqueça do nome');
+      } else {
+        setNameError('');
+      }
     }
 
     function descriptionValidator() {
-        if(description === '' || description === null) {
-            setDescriptionError('Não se esqueça da descrição');
-        } else {
-            setDescriptionError('');
-        }
+      if(description === '' || description === null) {
+        setDescriptionError('Não se esqueça da descrição');
+      } else {
+        setDescriptionError('');
+      }
     }
 
     function colorValidator() {
-        if(color === '' || color === null) {
-            setColorError('Não se esqueça da cor');
-        } else {
-            setColorError('');
-        }
+      if(color === '' || color === null) {
+          setColorError('Não se esqueça da cor');
+       } else {
+          setColorError('');
+       }
     }
 
     function materialValidator() {
-        if(material === '' || material === null) {
-            setMaterialError('Não se esqueça do material');
-        } else {
-            setMaterialError('');
-        }
+      if(material === '' || material === null) {
+          setMaterialError('Não se esqueça do material');
+      } else {
+          setMaterialError('');
+      }
     }
 
     function priceValidator() {
@@ -211,20 +216,16 @@ export default function RegisterNewShoe() {
                             label="Clique para selecionar"
                             value=""
                         />
-                         {/* <Picker.Item
-                            label="Masculino"
-                            value="14902049-10d6-46ae-a4ef-e7eeccea01cb"
-                        /> */}
                         {
-                            departments.map(department => {
-                                return (
-                                    <Picker.Item
-                                        key={department.id}
-                                        label={department.name}
-                                        value={department.id}
-                                    />
-                                );
-                            })
+                          departments.map(department => {
+                            return (
+                                <Picker.Item
+                                    key={department.id}
+                                    label={department.name}
+                                    value={department.id}
+                                />
+                            );
+                          })
                         }
 
                     </Picker>
@@ -248,28 +249,20 @@ export default function RegisterNewShoe() {
                         onValueChange={(itemValue, itemIndex) =>
                             setCategoryId(String(itemValue))
                     }>
-                        {/* <Picker.Item
-                            label="Selecione"
-                            value=""
-                        /> */}
                         <Picker.Item
                             label="Clique para selecionar"
                             value=""
                         />
-                        {/* <Picker.Item
-                            label="Sapatênis"
-                            value="41ef269a-4791-474a-9faf-2708daca7b3d"
-                        /> */}
                         {
-                            categories.map(categorie => {
-                                return (
-                                    <Picker.Item
-                                        key={categorie.id}
-                                        label={categorie.name}
-                                        value={categorie.id}
-                                    />
-                                );
-                            })
+                          categories.map(categorie => {
+                              return (
+                                  <Picker.Item
+                                      key={categorie.id}
+                                      label={categorie.name}
+                                      value={categorie.id}
+                                  />
+                              );
+                          })
                         }
                     </Picker>
                 </View>

@@ -21,11 +21,11 @@ export default function ListAllDepartmentsCustomer() {
 
     }
 
-    useFocusEffect(() => {
+    useEffect(() => {
       api.get('departamentos').then((response => {
         setDepartments(response.data);
       }));
-    });
+    }, []);
 
     return (
         <View style={ styles.main }>
@@ -37,7 +37,7 @@ export default function ListAllDepartmentsCustomer() {
               {
                 departments.map(department => {
                   return (
-                    <View key={department.id}>
+                    <View key={department.id} style={ customStyles.view }>
                       <View style={ customStyles.divisor }></View>
 
                       <RectButton style={customStyles.listIitem} onPress={() => goToCategories(department.id)}>
@@ -47,7 +47,6 @@ export default function ListAllDepartmentsCustomer() {
 
                       <View style={ customStyles.divisor }></View>
                     </View>
-
                   );
                 })
               }
@@ -57,6 +56,10 @@ export default function ListAllDepartmentsCustomer() {
 }
 
 const customStyles = StyleSheet.create({
+  view: {
+    width: '100%',
+  },
+
   divisor: {
     width: '100%',
     borderTopWidth: 1,

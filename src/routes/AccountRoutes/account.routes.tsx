@@ -27,7 +27,7 @@ export default function AccountRoutes() {
         <Screen name="Account" component={Account} />
       ) : (
         <>
-          <Screen name="SignIn" component={SignIn} />
+          <Screen name="SignIn" component={SignIn} options={{ headerShown: false }}/>
           <Screen name="SignUp" component={SignUp} />
         </>
       )}

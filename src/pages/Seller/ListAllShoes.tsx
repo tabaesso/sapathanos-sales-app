@@ -6,6 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import api from '../../services/api';
 
 import styles from '../styles';
+import formatValue from '../../utils/formatValue';
 
 interface Shoes {
     id: string;
@@ -73,7 +74,7 @@ export default function ListAllShoes() {
                                     <Text style={styles.shoeDescription}>{ shoe.description }</Text>
                                     <View style={styles.infoShoeContainer}>
                                         <Text style={styles.infoShoeLeft}>R$ </Text>
-                                        <Text style={styles.infoShoeRight}>{ shoe.price }</Text>
+                                        <Text style={styles.infoShoeRight}>{ formatValue(shoe.price).slice(2) }</Text>
                                     </View>
 
                                     <RectButton style={styles.iconButton} onPress={() => sizeEdit(shoe.size_id)}>

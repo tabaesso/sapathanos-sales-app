@@ -3,11 +3,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 import Account from './AccountRoutes/account.routes';
-import Cart from '../pages/Cart';
-import Categories from '../pages/Categories';
 import CategoryRoutes from './CustomerCategoryRoutes/category.routes';
 import ProductDetailRoutes from '../routes/ProductDetailRoutes/productdetail.routes'
-import Shoes from '../pages/Shoes';
 import CartRotues from './CartRoutes/cart.routes';
 
 const Tab = createMaterialBottomTabNavigator();

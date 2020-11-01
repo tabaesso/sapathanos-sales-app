@@ -1,3 +1,6 @@
+import 'intl';
+import 'intl/locale-data/jsonp/pt-BR';
+import 'react-native-get-random-values';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { useFonts } from 'expo-font';

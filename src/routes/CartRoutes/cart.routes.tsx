@@ -4,6 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Header from '../../components/Header';
 import Cart from '../../pages/Cart';
 import Checkout from '../../pages/Customer/Checkout'
+import OrderDetails from '../../pages/Customer/OrderDetails';
+import AccountRoutes from '../AccountRoutes/account.routes';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -32,14 +34,21 @@ export default function CartRoutes() {
           header: () => <Header title="Finalizar pedido" />,
         }}
       />
-      {/* <Screen
-        name="UpdateQuantity"
-        component={UpdateQuantity}
+      <Screen
+        name="OrderDetails"
+        component={OrderDetails}
         options={{
           headerShown: true,
-          header: () => <Header title="Adicionar quantidade de pares" />,
+          header: () => <Header title="Detalhes do pedido" />,
         }}
-      /> */}
+      />
+      <Screen
+        name="AccountRoutes"
+        component={AccountRoutes}
+        options={{
+          headerShown: false
+        }}
+      />
     </Navigator>
   );
 }

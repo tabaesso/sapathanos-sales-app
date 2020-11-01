@@ -163,15 +163,26 @@ export default function Cart() {
           }))
         }
       </ScrollView>
-
-      <View style={[styles.textIconButtonContainer, { marginBottom: 20 }]}>
-        <RectButton style={styles.textIconButton} onPress={handleCheckout}>
-          <MaterialCommunityIcons name="chevron-right" color="#FFF" size={26}/>
-          <Text style={styles.titleTextIconButton}>
-            Continuar
-          </Text>
-        </RectButton>
-      </View>
+      {
+        (products.length < 1) ?
+          <View style={[styles.textIconButtonContainer, { marginBottom: 20 }]}>
+            <RectButton style={styles.textIconButton} onPress={() => {}}>
+              <MaterialCommunityIcons name="cart-remove" color="#FFF" size={26}/>
+              <Text style={styles.titleTextIconButton}>
+                Seu carrinho está vázio
+              </Text>
+            </RectButton>
+          </View>
+        :
+          <View style={[styles.textIconButtonContainer, { marginBottom: 20 }]}>
+            <RectButton style={styles.textIconButton} onPress={handleCheckout}>
+              <MaterialCommunityIcons name="cart-arrow-right" color="#FFF" size={26}/>
+              <Text style={styles.titleTextIconButton}>
+                Continuar
+              </Text>
+            </RectButton>
+          </View>
+      }
     </View>
   );
 }

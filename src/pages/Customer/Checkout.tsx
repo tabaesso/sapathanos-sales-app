@@ -168,7 +168,7 @@ export default function Checkout() {
 
           <View style={customStyles.infoShoeContainer}>
             <Text style={styles.infoShoeLeft}>Produtos </Text>
-            <Text style={styles.infoShoeRight}> { formatValue(cartTotal) } </Text>
+            <Text style={styles.infoShoeRight}>{ formatValue(cartTotal) }</Text>
           </View>
 
           <View style={customStyles.infoShoeContainer}>

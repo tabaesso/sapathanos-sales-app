@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { View, Text, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 import api from '../services/api';
 
 import styles from './styles'
 import { RectButton } from 'react-native-gesture-handler';
+import formatValue from '../utils/formatValue';
 
 interface Shoes {
     id: string;
@@ -49,7 +51,7 @@ export default function Shoes() {
 
     function clearCategory() {
       loadProducts();
-      navigation.navigate('Shoes')
+      navigation.navigate('Shoes');
     }
 
     function goToProductDetails( id: string ){
@@ -86,7 +88,7 @@ export default function Shoes() {
                                     <Text style={styles.shoeDescription}>{ shoe.description.substring(0, 14) + '...' }</Text>
                                     <View style={styles.infoShoeContainer}>
                                         <Text style={styles.infoShoeLeft}>R$ </Text>
-                                        <Text style={styles.infoShoeRight}>{ shoe.price }</Text>
+                                        <Text style={styles.infoShoeRight}>{ formatValue(shoe.price).slice(2) }</Text>
                                     </View>
                                 </View>
                             </RectButton>

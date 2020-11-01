@@ -4,16 +4,16 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 
 import CreateShoeRoutes from './CreateShoeRoutes/createshoe.routes';
 import ListActiveShoes from '../pages/Seller/ListActiveShoes';
-import Categories from '../pages/Categories';
 import Account from './AccountRoutes/account.routes';
 import CategoryRoutes from './SellerCategoryRoutes/category.routes';
+import EditQuantityRoutes from './EditQuantityRoutes/editquantity.routes';
 
 const Tab = createMaterialBottomTabNavigator();
 
 export default function SellerRoutes() {
   return (
     <Tab.Navigator
-      initialRouteName="Shoes"
+      initialRouteName="EditQuantityRoutes"
       activeColor="#9B51E0"
       inactiveColor="#828282"
       barStyle={{
@@ -21,8 +21,8 @@ export default function SellerRoutes() {
       }}
     >
       <Tab.Screen
-        name="ListActiveShoes"
-        component={ListActiveShoes}
+        name="EditQuantityRoutes"
+        component={EditQuantityRoutes}
         options={{
           tabBarLabel: 'Sapatos',
           tabBarIcon: ({ color }) => (

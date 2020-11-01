@@ -6,6 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import api from '../../services/api';
 
 import styles from '../styles';
+import formatValue from '../../utils/formatValue';
 
 interface Shoes {
     id: string;
@@ -48,27 +49,27 @@ export default function Shoes() {
                                 <View style={ styles.cardVerticalImage }>
                                      <MaterialCommunityIcons name="file-image" color="#4F4F4F" size={60}/>
                                 </View>
-                               
+
 
                                 <View style={styles.cardVHorizontallInfo}>
                                     <Text style={styles.shoeName}>{ shoe.name }</Text>
                                     <Text style={styles.shoeDescription}>{ shoe.description }</Text>
-                                    
+
                                     <View style={styles.infoShoeContainer}>
                                         <Text style={styles.infoShoeLeft}>R$ </Text>
-                                        <Text style={styles.infoShoeRight}>{ shoe.price }</Text>
+                                        <Text style={styles.infoShoeRight}>{ formatValue(shoe.price).slice(2) }</Text>
                                     </View>
-                                    
+
                                     <RectButton style={styles.iconButton} onPress={() => sizeEdit(shoe.size_id)}>
                                         <MaterialCommunityIcons name="plus" color="#FFF" size={26}/>
                                     </RectButton>
                                 </View>
                             </View>
-                            
+
                         );
                     })
                 }
             </ScrollView>
-        </View>        
+        </View>
     );
 }

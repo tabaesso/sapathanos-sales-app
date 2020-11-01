@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import api from '../../services/api';
 
 import styles from '../styles';
-
 interface Categories {
-    id: string;
-    department_id: string;
-    name: string;
+  id: string;
+  department_id: string;
+  name: string;
 }
 
 interface DepartmentRouteParams {
@@ -18,86 +17,53 @@ interface DepartmentRouteParams {
 }
 
 export default function ListCategoriesByDepartmentCustomer() {
-    const navigation = useNavigation();
-    const route = useRoute();
-    const params = route.params as DepartmentRouteParams;
+  const navigation = useNavigation();
+  const route = useRoute();
+  const params = route.params as DepartmentRouteParams;
 
-    const [categories, setCategories] = useState<Categories[]>([]);
-    const [name, setName] = useState('');
-    const [nameError, setNameError] = useState('');
+  const [categories, setCategories] = useState<Categories[]>([]);
 
-    function loadCategories(id: string) {
-      const department_id = id;
+  function loadCategories(id: string) {
+    const department_id = id;
 
-      api.get(`categories/${department_id}/departamento`).then((response => {
-        setCategories(response.data);
-      }));
-    }
-
-    useEffect(() => {
-      loadCategories(params.id);
-    }, [params]);
-
-    function goToShoes(id: string) {
-      navigation.navigate('Shoes', { id });
-
+    api.get(`categories/${department_id}/departamento`).then((response => {
+      setCategories(response.data);
+    }));
   }
 
-    async function handleCreateCategory() {
-      const department_id = params.id;
-      nameValidator();
+  useEffect(() => {
+    loadCategories(params.id);
+  }, [params]);
 
-      if(
-        name === '' ||
-        department_id === ''
-      ) {
-        console.log('Algum capos está vázio');
-      } else {
-        const data = {
-          name,
-          department_id
-        };
+  function goToShoes(id: string) {
+    navigation.navigate('Shoes', { id });
+  }
 
-        await api.post('categories', data);
+  return (
+    <View style={ styles.main }>
+        <ScrollView
+            style={ [customStyles.listContainer, { marginTop: -50}] }
+        >
+            {
+            categories.map(categoty => {
+              return (
+                <View key={categoty.id}>
+                  <View style={ customStyles.divisor }></View>
 
-        loadCategories(params.id);
-        setName('');
-      }
-    }
+                  <RectButton style={customStyles.listIitem} onPress={() => goToShoes(categoty.id)}>
+                    <Text style={ styles.titlePage }>{ categoty.name }</Text>
+                    <MaterialCommunityIcons name="chevron-right" color="#828282" size={26}/>
+                  </RectButton>
 
-    function nameValidator() {
-      if(name === '' || name === null) {
-          setNameError('Não se esqueça do nome');
-      } else {
-          setNameError('');
-      }
-    }
+                  <View style={ customStyles.divisor }></View>
+                </View>
 
-    return (
-        <View style={ styles.main }>
-            <ScrollView
-                style={ [customStyles.listContainer, { marginTop: -50}] }
-            >
-                {
-                categories.map(categoty => {
-                  return (
-                    <View key={categoty.id}>
-                      <View style={ customStyles.divisor }></View>
-
-                      <RectButton style={customStyles.listIitem} onPress={() => goToShoes(categoty.id)}>
-                        <Text style={ styles.titlePage }>{ categoty.name }</Text>
-                        <MaterialCommunityIcons name="chevron-right" color="#828282" size={26}/>
-                      </RectButton>
-
-                      <View style={ customStyles.divisor }></View>
-                    </View>
-
-                  );
-                })
-              }
-            </ScrollView>
-        </View>
-    );
+              );
+            })
+          }
+        </ScrollView>
+    </View>
+  );
 }
 
 const customStyles = StyleSheet.create({
@@ -118,7 +84,7 @@ const customStyles = StyleSheet.create({
     backgroundColor: 'transparent',
 
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'center',
     direction: 'inherit',
     flexWrap: 'nowrap'

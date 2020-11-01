@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
 
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'flex-start'
 },
 
   cardVHorizontallInfo: {
@@ -375,7 +375,7 @@ const styles = StyleSheet.create({
         color: '#4f4f4f',
         fontFamily: 'Quicksand_700Bold',
         fontSize: 18,
-        
+
     },
 
     additionalInfoText: {
@@ -389,15 +389,25 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         borderRadius: 25,
-        marginRight: 4,
-        backgroundColor: '#EB5757',
+        margin: 5,
+        backgroundColor: '#9B51E0',
 
         justifyContent: 'center',
         alignItems: 'center',
+
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
+
+        elevation: 2,
     },
 
     sizeText: {
-        color: '#FFF',
+        color: '#F2F2F2',
         fontFamily: 'Quicksand_700Bold',
         fontSize: 24,
     },

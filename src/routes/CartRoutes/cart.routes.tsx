@@ -22,8 +22,8 @@ export default function CartRoutes() {
         name="Cart"
         component={Cart}
         options={{
-          headerShown: true,
-          header: () => <Header title="Meu carrinho" />,
+          headerShown: false,
+          // header: () => <Header title="Meu carrinho" />,
         }}
       />
       <Screen

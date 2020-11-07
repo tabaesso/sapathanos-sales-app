@@ -117,7 +117,7 @@ export default function ProductDetail() {
 
           await AsyncStorage.setItem('@Sapathanos:cart', JSON.stringify(cartArray));
 
-          navigation.navigate('Cart');
+          navigation.navigate('CartRotues');
 
           setSelectedSize('');
         }

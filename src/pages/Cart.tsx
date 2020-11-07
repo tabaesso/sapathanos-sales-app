@@ -8,6 +8,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 import formatValue from '../utils/formatValue';
 import api from '../services/api';
+import { useAuth } from '../hooks/auth';
 interface Product {
   id: string;
   category_id: string;
@@ -21,47 +22,79 @@ interface Product {
   quantity: number;
 }
 
-interface Size {
-  column: number;
+interface Customer {
+  id: string;
+  name: string;
 }
 
 export default function Cart() {
+  const { customer } = useAuth();
   const navigation = useNavigation();
 
   const [products, setProducts] = useState<Product[]>([]);
-  const [size, setSize] = useState<Size>();
 
   function loadProducts() {
     AsyncStorage.getItem('@Sapathanos:cart').then(response => {
       if(response) {
         const cartProducts = JSON.parse(response);
         setProducts(cartProducts);
+      } else {
+        setProducts([]);
       }
     })
   }
 
   function getSize(id: string, sizeColumn: string): Promise<any> {
-    return new Promise( async(resolve, reject) => {
-      const response = await api.post(`sizes/${id}/sizecolumn`, { sizeColumn });
+    return new Promise( (resolve, reject) => {
+      const response = api.post(`sizes/${id}/sizecolumn`, { sizeColumn });
 
       if(response)
         resolve(response);
-      reject('erro ao consultar');
-    })
+      reject('Query failed');
+    });
   }
 
-  function handleCheckout() {
-    // products.map(product => {
-    //   getSize(product.size_id, product.sizeColumn)
-    //     .then((fromResolve) =>  {
-    //       console.log(fromResolve);
-    //     })
-    //     .catch((fromReject) => console.log(fromReject))
-    // });
+  const checkAvailability = products.map(product => {
+    const result = getSize(product.size_id, product.sizeColumn)
+      .then((fromResolve) =>  {
+        const size = fromResolve.data;
+        const value = Object.values(size[0]);
 
-    navigation.navigate('Checkout');
+        if(Number(value) < product.quantity) {
+          return `${product.name}`;
+        } else {
+          return 'available';
+        }
+      })
+      .catch((fromReject) => console.log(fromReject));
+
+    return result;
+  });
+
+  async function handleCheckout() {
+    const response = await Promise.all(checkAvailability);
+
+    let product = '';
+
+    for(let i = 0; i < response.length; i++) {
+      if(response[i] !== 'available') {
+        product = String(response[i]);
+      }
+    }
+
+    if(product !== '') {
+      Alert.alert(
+        'Sinto muito 😥',
+        `Não temos mais o produto ${product} na quantidade desejada.`
+      );
+    } else {
+      if(customer && Object.keys(customer).length !== 0) {
+        navigation.navigate('Checkout');
+      } else {
+        navigation.navigate('AccountRoutes');
+      }
+    }
   }
-
 
   const cartTotal = useMemo(() => {
     const total = products.reduce(( accumulator, product) => {
@@ -88,8 +121,6 @@ export default function Cart() {
       return productItem.id === id;
     });
 
-    // product.id.slice(0, -7);
-
     products[productIndex].quantity -= 1;
 
     if(products[productIndex].quantity <= 0 ) {
@@ -104,7 +135,7 @@ export default function Cart() {
   });
 
   return (
-    <View style={ [styles.main, { paddingTop: -50 }] }>
+    <View style={ [styles.main, { paddingTop: '6%' }] }>
       <View style={ customStyles.topInfoContainer}>
         <View style={ customStyles.topInfoItem }>
           <MaterialCommunityIcons name="cart-outline" color="#2D9CDB" size={26}/>
@@ -151,7 +182,6 @@ export default function Cart() {
                   <Text style={styles.infoShoeLeft}>Quantidade: </Text>
                   <Text style={styles.infoShoeRight}> { product.quantity } </Text>
                 </View>
-
                 <View style={styles.infoShoeContainer}>
                   <RectButton style={styles.iconButton} onPress={() => removeProduct(product.id)}>
                     <MaterialCommunityIcons name="delete-outline" color="#FFF" size={26}/>

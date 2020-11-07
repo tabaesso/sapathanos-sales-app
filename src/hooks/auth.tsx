@@ -117,6 +117,7 @@ const AuthProvider: React.FC = ({ children }) => {
       '@Sapathanos:customer',
       '@Sapathanos:tokenSeller',
       '@Sapathanos:seller',
+      '@Sapathanos:cart'
     ]);
 
     setCustomerAuth({} as AuthStateCustomer);

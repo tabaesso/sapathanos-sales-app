@@ -9,6 +9,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import formatValue from '../../utils/formatValue';
 import { useAuth } from '../../hooks/auth';
 
+import api from '../../services/api';
+import { buttons } from 'polished';
+
 interface Product {
   id: string;
   category_id: string;
@@ -22,6 +25,18 @@ interface Product {
   quantity: number;
 }
 
+interface ProductOrderDTO {
+  name: string;
+  sku: string;
+  price: number;
+  quantity: number;
+}
+
+interface OrderDTO {
+  customer_id: string;
+  products: ProductOrderDTO[];
+}
+
 interface Customer {
   id: string;
   name: string;
@@ -32,9 +47,10 @@ export default function Checkout() {
   const { customer } = useAuth();
 
   const [products, setProducts] = useState<Product[]>([]);
-  const [shipping, setShiping] = useState(90);
+  const [shipping, setShiping] = useState(0);
   const [total, setTotal] = useState(0);
   const [customerData, setCustomerData] = useState<Customer>();
+  const [hasCart, setHasCart] = useState(false);
 
   function loadProducts() {
     AsyncStorage.getItem('@Sapathanos:cart').then(response => {
@@ -63,6 +79,7 @@ export default function Checkout() {
   }
 
   useEffect(() => {
+    loadCustomer();
     logInCheck();
   }, [customer])
 
@@ -83,6 +100,38 @@ export default function Checkout() {
 
   const calculate = () => {
     return  shipping + cartTotal;
+  }
+
+  const handlePayment = async () => {
+    if (customerData) {
+      const order: OrderDTO = {
+        customer_id: customerData.id,
+        products: []
+      };
+
+      products.map(product => {
+        const orderDetail: ProductOrderDTO = {
+          name: product.name,
+          sku: product.id,
+          price: product.price,
+          quantity: product.quantity
+        }
+        order.products.push(orderDetail);
+      });
+
+      const response = await api.post('orders', order);
+      await api.post(`payments/${response.data.id}/finalize`);
+
+      Alert.alert('Pedido pago com sucesso', 'Em breve os Sapathanos tão aí! 🤩',
+        [{text: 'Ok', onPress: async () => await paidOrder() }]);
+    }
+  }
+
+  const paidOrder = async () => {
+    await AsyncStorage.removeItem(
+      '@Sapathanos:cart'
+    );
+    navigation.goBack();
   }
 
   return (
@@ -173,7 +222,7 @@ export default function Checkout() {
 
           <View style={customStyles.infoShoeContainer}>
             <Text style={styles.infoShoeLeft}>Frete </Text>
-          <Text style={styles.infoShoeRight}>{ formatValue(shipping) }</Text>
+          <Text style={styles.infoShoeRight}>{ shipping === 0 ? 'Grátis' : formatValue(shipping) }</Text>
           </View>
 
           <View style={customStyles.infoShoeContainer}>
@@ -184,7 +233,7 @@ export default function Checkout() {
       </View>
 
       <View style={[styles.textIconButtonContainer, { marginBottom: 20 }]}>
-        <RectButton style={styles.textIconButton} onPress={()=> Alert.alert('Você foi enganado, tá ok!?')}>
+        <RectButton style={styles.textIconButton} onPress={handlePayment}>
           <MaterialCommunityIcons name="credit-card-outline" color="#FFF" size={26}/>
           <Text style={styles.titleTextIconButton}>
             Finalizar

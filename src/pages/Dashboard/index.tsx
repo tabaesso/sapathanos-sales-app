@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { View, Button, Text, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Alert, StyleSheet, Button } from 'react-native';
 import { Picker } from '@react-native-community/picker';
 
-import { RectButton } from 'react-native-gesture-handler';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAuth } from '../../hooks/auth';
 
 import api from '../../services/api';
-import formatValue from '../../utils/formatValue';
 
 import {
   Container,
@@ -16,8 +15,20 @@ import {
   ProductTitle,
   PriceContainer,
   ProductPrice,
-  ProductButton,
+  TotalContainer,
+  LogoutButton,
+  LogoutButtonText,
+  TotalBalanceReport,
+  TotalBalance,
+  SearchInput,
+  SearchInputBlockRow,
+  SearchInputContainer,
+  SearchLabel,
+  SearchReportContainer,
+  SearchSubmitButton,
+  SearchSubmitButtonText,
 } from './styles';
+import formatValue from '../../utils/formatValue';
 
 interface OrderDTO {
   id: string;
@@ -40,6 +51,13 @@ const Dashboard: React.FC = () => {
   const [year, setYear] = useState(0);
 
   const handleFilter = async () => {
+    if (month === '' || year === 0) {
+      Alert.alert(
+        'Dados incompletos',
+        'Por favor preencha os demais campos para obter o relatório',
+      );
+    }
+
     const balances = await api.get(
       `/orders/findTotalBalance?month=${Number(month)}&year=${year}`,
     );
@@ -50,17 +68,16 @@ const Dashboard: React.FC = () => {
   return (
     <>
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-        {/* <Text>Saldo de vendas por mês</Text> */}
         <Button title="Sair" onPress={signOut} />
-        <Text>{report?.amount}</Text>
       </View>
-      <View>
+      <SearchReportContainer>
+        <SearchLabel>Mês de vendas</SearchLabel>
         <Picker
           selectedValue={month}
           onValueChange={itemValue => setMonth(itemValue as string)}
-          // style={styles.input}
+          style={styles.input}
         >
-          <Picker.Item label="Mês" value="" />
+          <Picker.Item label="Selecione" value="" />
           <Picker.Item label="Jan" value="1" />
           <Picker.Item label="Fev" value="2" />
           <Picker.Item label="Mar" value="3" />
@@ -74,61 +91,76 @@ const Dashboard: React.FC = () => {
           <Picker.Item label="Nov" value="11" />
           <Picker.Item label="Dez" value="12" />
         </Picker>
-      </View>
-      <View>
-        <TextInput
-          value={year.toString()}
-          onChangeText={text => setYear(Number(text))}
-          placeholder="Qual o ano?"
-          placeholderTextColor="#C1BCCC"
-        />
-        <RectButton onPress={handleFilter}>
-          <Text>Buscar</Text>
-        </RectButton>
-      </View>
-      {/* <FlatList
-        data={report?.orders}
-        keyExtractor={item => item.id}
-        ListHeaderComponent={<View />}
-        ListHeaderComponentStyle={{ height: 80, backgroundColor: '#bbb' }}
-        renderItem={({ item }) => (
-          <>
-            <Text>{item.id}</Text>
-            <Text>{item.paid}</Text>
-            <Text>{item.total_amount}</Text>
-          </>
-        )}
-      /> */}
+
+        <SearchInputContainer>
+          <SearchInputBlockRow>
+            <SearchLabel>Selecione o ano de vendas</SearchLabel>
+            <SearchInput
+              value={year.toString()}
+              onChangeText={text => setYear(Number(text))}
+              placeholder="Qual o ano?"
+              placeholderTextColor="#C1BCCC"
+            />
+          </SearchInputBlockRow>
+        </SearchInputContainer>
+        <SearchSubmitButton onPress={handleFilter}>
+          <SearchSubmitButtonText>Buscar</SearchSubmitButtonText>
+        </SearchSubmitButton>
+      </SearchReportContainer>
       <Container>
         <ProductContainer>
           <ProductList
             data={report?.orders}
             keyExtractor={item => item.id}
-            ListHeaderComponent={<View />}
-            ListHeaderComponentStyle={{
+            ListFooterComponent={<View />}
+            ListFooterComponentStyle={{
               height: 80,
             }}
             renderItem={({ item }) => (
               <Product>
-                {/* <ProductImage source={{ uri: item.image_url }} /> */}
-                <ProductTitle>{item.updated_at}</ProductTitle>
+                <ProductTitle>
+                  {item.updated_at
+                    ? new Date(item.updated_at).toLocaleDateString()
+                    : '-'}
+                </ProductTitle>
                 <PriceContainer>
-                  <ProductPrice>{item.total_amount}</ProductPrice>
-                  {/* <ProductButton
-                  testID={`add-to-cart-${item.id}`}
-                  onPress={() => handleAddToCart(item)}
-                > */}
-                  {/* <FeatherIcon size={20} name="plus" color="#C4C4C4" /> */}
-                  {/* </ProductButton> */}
+                  <ProductPrice>{formatValue(item.total_amount)}</ProductPrice>
                 </PriceContainer>
               </Product>
             )}
           />
         </ProductContainer>
-        {/* <FloatingCart /> */}
+        <TotalContainer>
+          <LogoutButton>
+            <MaterialCommunityIcons
+              name="square-inc-cash"
+              size={24}
+              color="#fff"
+            />
+            <LogoutButtonText>Total vendido no mês</LogoutButtonText>
+          </LogoutButton>
+          <TotalBalanceReport>
+            {report?.amount ? (
+              <TotalBalance>{formatValue(report?.amount)}</TotalBalance>
+            ) : (
+              <TotalBalance>R$ -</TotalBalance>
+            )}
+          </TotalBalanceReport>
+        </TotalContainer>
       </Container>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    height: 54,
+    backgroundColor: '#FFF',
+    justifyContent: 'center',
+    paddingHorizontal: 16,
+    marginTop: 4,
+    marginBottom: 16,
+  },
+});
 
 export default Dashboard;

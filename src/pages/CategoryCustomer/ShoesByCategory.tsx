@@ -3,11 +3,11 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { View, Text, ScrollView, StyleSheet, SafeAreaView, ActivityIndicator } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import api from '../services/api';
+import api from '../../services/api';
 
-import styles from './styles'
+import styles from './../styles'
 import { RectButton } from 'react-native-gesture-handler';
-import formatValue from '../utils/formatValue';
+import formatValue from '../../utils/formatValue';
 import { FlatList } from 'react-native';
 
 interface Shoes {
@@ -18,9 +18,14 @@ interface Shoes {
     size_id: string;
 }
 
-export default function Shoes() {
+interface CategotyRouteParams {
+  id: string;
+}
+
+export default function ShoesByCategory() {
     const navigation = useNavigation();
     const route = useRoute();
+    const params = route.params as CategotyRouteParams;
 
     const [data, setData] = useState<Shoes[]>([]);
     const [page, setPage] = useState(0);
@@ -28,10 +33,10 @@ export default function Shoes() {
     const [perPage, setPerPage] = useState(10);
     const [total, setTotal] = useState(0);
 
-    async function loadProducts() {
+    async function loadProducts(category_id: string) {
       setLoading(true);
 
-      const response = await api.get(`products/${0}/${perPage}/active`);
+      const response = await api.get(`products/${category_id}/${0}/${perPage}/category`);
 
       const shoes = response.data;
 
@@ -46,7 +51,8 @@ export default function Shoes() {
 
       setLoading(true);
 
-      const response = await api.get(`products/${page}/${perPage}/active`);
+      const category_id = params.id;
+      const response = await api.get(`products/${category_id}/${page}/${perPage}/category`);
 
       const shoes = response.data;
 
@@ -57,7 +63,8 @@ export default function Shoes() {
     }
 
     async function getTotal() {
-      const response = await api.get(`products/active`);
+      const category_id = params.id;
+      const response = await api.get(`products/${category_id}/category`);
 
       const shoes = response.data;
 
@@ -65,9 +72,14 @@ export default function Shoes() {
     }
 
     useEffect(() => {
+      const category_id = params.id;
       getTotal();
-      loadProducts();
+      loadProducts(category_id);
     }, []);
+
+    function clearCategory() {
+      navigation.navigate('ListiAllDepartmentCustomer');
+    }
 
     function goToProductDetails( id: string ){
         navigation.navigate('ProductDetails', { id });
@@ -103,8 +115,17 @@ export default function Shoes() {
     };
 
     return (
-        <View style={ styles.main }>
+        <View style={ [styles.main, { marginTop: 50}] }>
             <Text style={styles.lenghtInfo}> Total de sapatos encontrados: { data.length } </Text>
+
+            <View style={ [styles.textIconButtonContainer, { marginTop: -10, marginBottom: 10 }]}>
+              <RectButton style={styles.textIconButton} onPress={clearCategory}>
+                  <MaterialCommunityIcons name="autorenew" color="#FFF" size={26}/>
+                  <Text style={styles.titleTextIconButton}>
+                      Limpar categoria
+                  </Text>
+              </RectButton>
+            </View>
 
             <SafeAreaView style={customStyles.container}>
               <FlatList
@@ -129,7 +150,7 @@ const customStyles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
     maxWidth: 540,
-    marginBottom: 10
+    marginBottom: 50
   },
 
   loading: {

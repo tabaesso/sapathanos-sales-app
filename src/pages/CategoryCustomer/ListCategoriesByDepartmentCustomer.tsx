@@ -36,7 +36,7 @@ export default function ListCategoriesByDepartmentCustomer() {
   }, [params]);
 
   function goToShoes(id: string) {
-    navigation.navigate('Shoes', { id });
+    navigation.navigate('ShoesByCategory', { id });
   }
 
   return (

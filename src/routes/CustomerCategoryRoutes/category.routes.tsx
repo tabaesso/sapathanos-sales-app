@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Header from '../../components/Header';
 import ListCategoriesByDepartmentCustomer from '../../pages/CategoryCustomer/ListCategoriesByDepartmentCustomer';
 import ListiAllDepartmentCustomer from '../../pages/CategoryCustomer/ListAllDepartmentsCustomer';
+import ShoesByCategory from '../../pages/CategoryCustomer/ShoesByCategory';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -17,6 +18,7 @@ export default function CategoryRoutes() {
       }}
     >
       <Screen name="ListiAllDepartmentCustomer" component={ListiAllDepartmentCustomer} />
+      <Screen name="ShoesByCategory" component={ShoesByCategory} />
       <Screen
         name="ListCategoriesByDepartmentCustomer"
         component={ListCategoriesByDepartmentCustomer}

@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 50,
     paddingBottom: 0,
-    backgroundColor: '#FFF'
+    // backgroundColor: '#FFF'
   },
 
   mainForScroll: {

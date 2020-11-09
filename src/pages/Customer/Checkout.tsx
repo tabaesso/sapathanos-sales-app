@@ -122,6 +122,8 @@ export default function Checkout() {
       const response = await api.post('orders', order);
       await api.post(`payments/${response.data.id}/finalize`);
 
+      await api.post(`email/${response.data.id}`);
+
       Alert.alert('Pedido pago com sucesso', 'Em breve os Sapathanos tão aí! 🤩',
         [{text: 'Ok', onPress: async () => await paidOrder() }]);
     }

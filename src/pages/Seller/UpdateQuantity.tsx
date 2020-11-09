@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
-import { Text, StyleSheet, ScrollView, TextInput, View } from 'react-native';
+import { Text, StyleSheet, ScrollView, TextInput, View, ActivityIndicator } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -85,9 +85,9 @@ export default function UpdateQuantity() {
 
     if(!size) {
         return (
-            <View >
-                <Text>Carrgando...</Text>
-            </View>
+          <View style={{  alignSelf: 'center', marginVertical: 20, }}>
+            <ActivityIndicator color="#9B51E0" size="large"/>
+          </View>
         )
     }
 

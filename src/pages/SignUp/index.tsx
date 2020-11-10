@@ -28,6 +28,7 @@ interface SignUpFormData {
   name: string;
   email: string;
   password: string;
+  address: string;
 }
 
 const SignUp: React.FC = () => {
@@ -36,6 +37,7 @@ const SignUp: React.FC = () => {
 
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
+  const addressInputRef = useRef<TextInput>(null);
 
   const handleSignUp = useCallback(
     async (data: SignUpFormData) => {
@@ -47,6 +49,7 @@ const SignUp: React.FC = () => {
             .required('E-mail obrigatório')
             .email('Digite um e-mail válido'),
           password: Yup.string().min(6, 'No mínimo 6 digítos'),
+          address: Yup.string().required('Endereço obrigatório'),
         });
 
         await schema.validate(data, {
@@ -123,6 +126,15 @@ const SignUp: React.FC = () => {
                 icon="lock"
                 placeholder="Senha"
                 textContentType="newPassword"
+                returnKeyType="next"
+                onSubmitEditing={() => addressInputRef.current?.focus()}
+              />
+              <Input
+                ref={addressInputRef}
+                autoCapitalize="words"
+                name="address"
+                icon="map-marker"
+                placeholder="Endereço"
                 returnKeyType="send"
                 onSubmitEditing={() => formRef.current?.submitForm()}
               />

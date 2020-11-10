@@ -40,6 +40,7 @@ interface OrderDTO {
 interface Customer {
   id: string;
   name: string;
+  address: string;
 }
 
 export default function Checkout() {
@@ -145,28 +146,7 @@ export default function Checkout() {
             <Text style={styles.shoeName}>Endereço</Text>
           </View>
           <View style={styles.infoShoeContainer}>
-            <Text style={styles.infoShoeLeft}>Logradouro: </Text>
-            <Text style={styles.infoShoeRight}>Um nome de rua bem grande e tals</Text>
-          </View>
-          <View style={styles.infoShoeContainer}>
-            <Text style={styles.infoShoeLeft}>nº: </Text>
-            <Text style={styles.infoShoeRight}>80</Text>
-          </View>
-          <View style={styles.infoShoeContainer}>
-            <Text style={styles.infoShoeLeft}>Bairro: </Text>
-            <Text style={styles.infoShoeRight}>Centro</Text>
-          </View>
-          <View style={styles.infoShoeContainer}>
-            <Text style={styles.infoShoeLeft}>Cidade: </Text>
-            <Text style={styles.infoShoeRight}>Brasília</Text>
-          </View>
-          <View style={styles.infoShoeContainer}>
-            <Text style={styles.infoShoeLeft}>Estado: </Text>
-            <Text style={styles.infoShoeRight}>Distrito Federal</Text>
-          </View>
-          <View style={styles.infoShoeContainer}>
-            <Text style={styles.infoShoeLeft}>CEP: </Text>
-            <Text style={styles.infoShoeRight}>12312-000</Text>
+            <Text style={styles.infoShoeRight}>{customerData?.address}</Text>
           </View>
 
           <View style={styles.textIconButtonContainer}>
@@ -183,7 +163,7 @@ export default function Checkout() {
       <View style={styles.cardHorizontallContent}>
         <View style={styles.cardVHorizontallInfo}>
           <View style={ customStyles.titleCard }>
-            <MaterialCommunityIcons name="map-marker" color="#2F80ED" size={26}/>
+            <MaterialCommunityIcons name="cart" color="#2F80ED" size={26}/>
             <Text style={styles.shoeName}>Produtos</Text>
           </View>
 
@@ -213,7 +193,7 @@ export default function Checkout() {
       <View style={styles.cardHorizontallContent} >
         <View style={styles.cardVHorizontallInfo}>
           <View style={ customStyles.titleCard }>
-            <MaterialCommunityIcons name="cart" color="#2F80ED" size={26}/>
+            <MaterialCommunityIcons name="card-text" color="#2F80ED" size={26}/>
             <Text style={styles.shoeName}>Resumo</Text>
           </View>
 

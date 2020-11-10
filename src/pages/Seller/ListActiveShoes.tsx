@@ -135,7 +135,7 @@ export default function Shoes() {
                 renderItem={renderItem}
                 keyExtractor={(item, index) => index.toString()}
                 onEndReached={loadMoreProducts}
-                onEndReachedThreshold={0.1}
+                onEndReachedThreshold={0.2}
                 refreshing={loading}
                 ListFooterComponent={renderFooter}
               />
@@ -150,7 +150,7 @@ const customStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 5,
-    marginBottom: 30
+    marginBottom: 50
   },
 
   item: {

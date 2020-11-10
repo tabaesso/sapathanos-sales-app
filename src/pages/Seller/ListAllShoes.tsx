@@ -148,7 +148,7 @@ export default function ListAllShoes() {
                 renderItem={renderItem}
                 keyExtractor={(item, index) => index.toString()}
                 onEndReached={loadMoreProducts}
-                onEndReachedThreshold={0.1}
+                onEndReachedThreshold={0.2}
                 ListFooterComponent={renderFooter}
               />
             </SafeAreaView>
@@ -162,7 +162,7 @@ const customStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 5,
-    marginBottom: 50
+    marginBottom: 60
   },
 
   item: {

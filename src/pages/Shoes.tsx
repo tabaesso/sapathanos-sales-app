@@ -112,7 +112,7 @@ export default function Shoes() {
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 onEndReached={loadMoreProducts}
-                onEndReachedThreshold={0.1}
+                onEndReachedThreshold={0.2}
                 refreshing={loading}
                 ListFooterComponent={renderFooter}
                 numColumns={2}
@@ -129,7 +129,7 @@ const customStyles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
     maxWidth: 540,
-    marginBottom: 10
+    marginBottom: 20
   },
 
   loading: {

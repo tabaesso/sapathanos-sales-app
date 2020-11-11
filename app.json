@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "sapathanos-sales-app",
-    "slug": "sapathanos-sales-app",
-    "version": "1.0.0",
+    "name": "Sapathanos App",
+    "slug": "sapathanos-app",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -21,6 +21,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "description": "Projeto de aplicação desenvolvida com react-nativa para uma empresa de sapatatos fictícia SapaThanos",
+    "android": {
+      "package": "com.sapathanos.sapathanos"
     }
+  },
+  "android": {
+    "package": "com.sapathanos.sapathanos",
+    "versionCode": 1
   }
 }

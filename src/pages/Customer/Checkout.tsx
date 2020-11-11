@@ -11,6 +11,7 @@ import { useAuth } from '../../hooks/auth';
 
 import api from '../../services/api';
 import { buttons } from 'polished';
+import { ActivityIndicator } from 'react-native';
 
 interface Product {
   id: string;
@@ -52,6 +53,7 @@ export default function Checkout() {
   const [total, setTotal] = useState(0);
   const [customerData, setCustomerData] = useState<Customer>();
   const [hasCart, setHasCart] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   function loadProducts() {
     AsyncStorage.getItem('@Sapathanos:cart').then(response => {
@@ -104,6 +106,7 @@ export default function Checkout() {
   }
 
   const handlePayment = async () => {
+    setLoading(true);
     if (customerData) {
       const order: OrderDTO = {
         customer_id: customerData.id,
@@ -128,6 +131,8 @@ export default function Checkout() {
       Alert.alert('Pedido pago com sucesso', 'Em breve os Sapathanos tão aí! 🤩',
         [{text: 'Ok', onPress: async () => await paidOrder() }]);
     }
+
+    setLoading(false);
   }
 
   const paidOrder = async () => {
@@ -213,6 +218,24 @@ export default function Checkout() {
           </View>
         </View>
       </View>
+
+      {
+        loading ? (
+          <View style={{
+            alignSelf: 'center',
+            marginVertical: 20,
+          }}>
+            <Text style={{
+              fontFamily: 'Quicksand_600SemiBold',
+              fontSize: 18,
+              color: '#333',
+              textAlign: 'center'
+            }}> Aguarde que estamos quase lá... 😎 </Text>
+            <ActivityIndicator color="#9B51E0" size="large"/>
+          </View>
+        )
+        : null
+      }
 
       <View style={[styles.textIconButtonContainer, { marginBottom: 20 }]}>
         <RectButton style={styles.textIconButton} onPress={handlePayment}>

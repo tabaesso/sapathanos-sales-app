@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, Alert } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -32,6 +32,7 @@ export default function Cart() {
   const navigation = useNavigation();
 
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(false);
 
   function loadProducts() {
     AsyncStorage.getItem('@Sapathanos:cart').then(response => {
@@ -72,6 +73,7 @@ export default function Cart() {
   });
 
   async function handleCheckout() {
+    setLoading(true);
     const response = await Promise.all(checkAvailability);
 
     let product = '';
@@ -94,6 +96,8 @@ export default function Cart() {
         navigation.navigate('AccountRoutes');
       }
     }
+
+    setLoading(false);
   }
 
   const cartTotal = useMemo(() => {
@@ -193,6 +197,20 @@ export default function Cart() {
           }))
         }
       </ScrollView>
+
+      {
+        loading ? (
+          <View style={{
+            alignSelf: 'center',
+            marginVertical: 20,
+          }}>
+            <Text style={ customStyles.topInfoText }> Só estamos checando algumas coisinhas... </Text>
+            <ActivityIndicator color="#9B51E0" size="large"/>
+          </View>
+        )
+        : null
+      }
+
       {
         (products.length < 1) ?
           <View style={[styles.textIconButtonContainer, { marginBottom: 20 }]}>
@@ -239,6 +257,7 @@ const customStyles = StyleSheet.create({
   topInfoText: {
     fontFamily: 'Quicksand_600SemiBold',
     fontSize: 18,
-    color: '#333'
+    color: '#333',
+    textAlign: 'center'
   }
 });

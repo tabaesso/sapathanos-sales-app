@@ -78,4 +78,4 @@ Este projeto está sob a licença do MIT. Veja a [licença][license-url] para ma
 [apk-badge]: https://img.shields.io/badge/Apk-download-important?logo=android&color=%239B51E0
 [apk-url]: https://drive.google.com/file/d/1ZfdLieHXbqJk92k58hMeJhE0VpJMAgI0/view?usp=drivesdk
 [license-badge]: https://img.shields.io/github/license/tabaesso/sapathanos-sales-app?color=%239B51E0
-[license-url]: https://github.com/tabaesso/sapathanos-sales-app/blob/master/LICENSE
+[license-url]: https://github.com/tabaesso/sapathanos-sales-app/blob/main/LICENSE

@@ -14,7 +14,7 @@
 *  ESLint
 * [Veja algumas rotas da api aqui](routes.md)
 
-## 👩🏻‍💻 Como rodar o projeto: desenvolvimento?
+## 👩🏻‍💻 Como rodar o projeto?
 
    -  Digite `yarn` na raiz para instalar as dependências do projeto.
    -  Altere o arquivo `src/services/api.ts`, modifique a baseURL para a url do servidor rodando em sua máquina.

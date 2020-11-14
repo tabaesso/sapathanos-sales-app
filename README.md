@@ -1,13 +1,18 @@
 # ✨ sapathanos-sales-app
 
+![Status][status-badge]
+[![Apk Download][apk-badge]][apk-url]
+[![License][license-badge]][license-url]
+<br />
+
 ## ⚠ Requisitos projeto
--  Yarn
--  Expo
--  [sapathanos-sales-server](https://github.com/tabaesso/sapathanos-sales-server)
--  Prettier
--  EditorConfig
--  ESLint
-- [Veja algumas rotas da api aqui](routes.md)
+*  Yarn
+*  Expo
+*  [sapathanos-sales-server](https://github.com/tabaesso/sapathanos-sales-server)
+*  Prettier
+*  EditorConfig
+*  ESLint
+* [Veja algumas rotas da api aqui](routes.md)
 
 ## 👩🏻‍💻 Como rodar o projeto: desenvolvimento?
 
@@ -65,3 +70,12 @@ A nomenclatura deve seguir o padrão:<br>
         </td>
     </tr>
 </table>
+
+### 📓 Licença
+Este projeto está sob a licença do MIT. Veja a [licença][license-url] para mais informações.
+
+[status-badge]: https://img.shields.io/badge/status-building-important?logo=tool&color=%2334EB43
+[apk-badge]: https://img.shields.io/badge/Apk-download-important?logo=android&color=%239B51E0
+[apk-url]: https://drive.google.com/file/d/1ZfdLieHXbqJk92k58hMeJhE0VpJMAgI0/view?usp=drivesdk
+[license-badge]: https://img.shields.io/github/license/tabaesso/sapathanos-sales-app?color=%239B51E0
+[license-url]: https://github.com/tabaesso/sapathanos-sales-app/blob/master/LICENSE
